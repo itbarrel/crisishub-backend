@@ -1,6 +1,7 @@
 const {
     Model,
 } = require('sequelize')
+
 const { EmailService } = require('../services')
 
 module.exports = (sequelize, DataTypes) => {
@@ -19,16 +20,6 @@ module.exports = (sequelize, DataTypes) => {
         userName: {
             type: DataTypes.STRING,
             allowNull: false,
-            validate: {
-                isUnique: async (value, next) => {
-                    const user = await User.findOne({
-                        userName: value,
-                    })
-                    if (user) {
-                        next('Username Already taken')
-                    } else next()
-                },
-            },
         },
         firstName: {
             type: DataTypes.STRING,
@@ -106,6 +97,13 @@ module.exports = (sequelize, DataTypes) => {
         classMethods: {
             active: async () => { },
         },
+        indexes: [
+            {
+                unique: true,
+                name: 'unique_user_name',
+                fields: [sequelize.fn('lower', sequelize.col('userName'))],
+            },
+        ],
         hooks: {
             beforeCreate(user) {
                 return user

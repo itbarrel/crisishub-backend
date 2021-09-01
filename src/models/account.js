@@ -3,7 +3,9 @@ const {
 } = require('sequelize')
 const { downcase, removeChars } = require('../utils')
 
-const nonCopyTables = ['Account']
+// const nonCopyTables = ['Account']
+
+const modelOrder = ['Role', 'User']
 
 module.exports = (sequelize, DataTypes) => {
     class Account extends Model {
@@ -19,16 +21,6 @@ module.exports = (sequelize, DataTypes) => {
         name: {
             type: DataTypes.STRING,
             allowNull: false,
-            validate: {
-                isUnique: async (value, next) => {
-                    const account = await Account.findOne({
-                        name: value,
-                    })
-                    if (account) {
-                        next('Name Already taken')
-                    } else next()
-                },
-            },
         },
         tenant_name: {
             type: DataTypes.STRING,
@@ -61,22 +53,31 @@ module.exports = (sequelize, DataTypes) => {
         classMethods: {
             active: async () => { },
         },
+        indexes: [
+            {
+                unique: true,
+                name: 'unique_account_name',
+                fields: [sequelize.fn('lower', sequelize.col('name'))],
+            },
+        ],
         hooks: {
-            // eslint-disable-next-line no-unused-vars
             beforeValidate: (account) => {
                 account.tenant_name = removeChars(downcase(account.name))
                 return account
             },
             afterCreate: async (account) => {
                 await sequelize.createSchema(account.tenant_name)
-                Object.keys(sequelize.models).forEach(async (currentItem) => {
-                    if (nonCopyTables.includes(currentItem)) {
-                        return
-                    }
+
+                let currentItem
+                for (let i = 0; i < modelOrder.length; i += 1) {
+                    currentItem = modelOrder[i]
+                    // eslint-disable-next-line no-await-in-loop
                     await sequelize.models[currentItem].schema(account.tenant_name).sync({
                         force: true,
+                        alter: true,
                     })
-                })
+                }
+
                 return account
             },
         },
