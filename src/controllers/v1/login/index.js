@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken')
 const { UserService } = require('../../../services/resources')
+const storage = require('../../../utils/cl-storage')
 
 const all = async (req, res, next) => {
     try {
@@ -12,17 +13,23 @@ const all = async (req, res, next) => {
 const login = async (req, res, next) => {
     try {
         const loginData = req.body
-        const verifyEmail = await UserService.findByQuery({ email: loginData.email }, true)
+        const user = await UserService.findByQuery({ email: loginData.email }, true)
 
-        if (!verifyEmail) {
+        if (!user) {
             res.send({ message: 'Email and Password Not Found' })
         } else
-        if (loginData.password !== verifyEmail.password) {
+        if (loginData.password !== user.password) {
             res.send({ message: 'Email and Password Not Found' })
         } else {
             const jwtToken = jwt.sign(
-                { id: verifyEmail.id, email: verifyEmail.email }, process.env.JWT_SECRET, { expiresIn: '100s' },
+                { id: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '100s' },
             )
+
+            storage.run(() => {
+                storage.set('user', user)
+                next()
+            })
+
             res.send({ message: 'Welcome', token: jwtToken })
         }
     } catch (error) {

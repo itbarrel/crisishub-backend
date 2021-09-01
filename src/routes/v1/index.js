@@ -3,6 +3,7 @@ const express = require('express')
 const router = express.Router()
 
 const verifyAccount = require('../../middlewares/verifyAccount')
+// const permissions = require('../../middlewares/permissions')
 const { generalValidations } = require('../../validations')
 
 const validate = require('../../middlewares/validate')
@@ -16,7 +17,7 @@ const routes = [
     { path: '/users', routes: [validate(generalValidations.headers), verifyAccount, userRoute] },
     { path: '/roles', routes: [validate(generalValidations.headers), verifyAccount, roleRoute] },
     { path: '/accounts', routes: [accountRoute] },
-    { path: '/login', routes: [loginRoute] },
+    { path: '/login', routes: [verifyAccount, loginRoute] },
 ]
 
 routes.forEach((route) => {
