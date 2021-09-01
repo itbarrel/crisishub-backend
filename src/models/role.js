@@ -19,16 +19,6 @@ module.exports = (sequelize, DataTypes) => {
         name: {
             type: DataTypes.STRING,
             allowNull: false,
-            validate: {
-                isUnique: async (value, next) => {
-                    const role = await Role.findOne({
-                        name: value,
-                    })
-                    if (role) {
-                        next('Name Already taken')
-                    } else next()
-                },
-            },
         },
         value: {
             type: DataTypes.STRING,
@@ -68,6 +58,13 @@ module.exports = (sequelize, DataTypes) => {
         classMethods: {
             active: async () => { },
         },
+        indexes: [
+            {
+                unique: true,
+                name: 'unique_role_name',
+                fields: [sequelize.fn('lower', sequelize.col('name'))],
+            },
+        ],
         hooks: {
             // eslint-disable-next-line no-unused-vars
             beforeValidate: (role) => {

@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 const passport = require('passport')
 const passportJwt = require('passport-jwt')
-const { UserService } = require('../services/resources')
+const { UserService } = require('../services')
 
 const { ExtractJwt } = passportJwt
 const StrategyJwt = passportJwt.Strategy
