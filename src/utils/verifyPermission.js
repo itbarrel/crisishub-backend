@@ -1,9 +1,7 @@
-module.exports = (req, permissionsToChk) => {
+module.exports = (role, permissionsToChk) => {
     const {
-        decoded: {
-            permissions,
-        },
-    } = req
+        permissions,
+    } = role
 
     let granted = false
     let missed = false
@@ -11,9 +9,7 @@ module.exports = (req, permissionsToChk) => {
     if (Object.keys(permissions).length > 0 && permissionsToChk && permissionsToChk.length > 0) {
         permissionsToChk.forEach((per) => {
             if (permissions[per.entity] && !missed) {
-                const {
-                    actions,
-                } = permissions[per.entity]
+                const actions = permissions[per.entity]
 
                 if (actions.includes('*')) granted = true
                 else {

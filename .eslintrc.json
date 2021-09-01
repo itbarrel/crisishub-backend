@@ -37,6 +37,10 @@
       "error",
       "never"
     ],
+    "max-len": [
+      "error",
+      125
+    ],
     "semi-style": [
       "error",
       "last"

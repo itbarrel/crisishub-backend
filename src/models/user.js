@@ -1,13 +1,18 @@
 const {
     Model,
 } = require('sequelize')
-
+const bcrypt = require('bcrypt')
 const { EmailService } = require('../services')
 
 module.exports = (sequelize, DataTypes) => {
     class User extends Model {
         static associate(models) {
-            User.belongsTo(models.Role, { foreignKey: 'RoleId' })
+            User.belongsTo(models.Role, {
+                foreignKey: {
+                    allowNull: false,
+                },
+                onDelete: 'cascade',
+            })
         }
     }
 
@@ -71,7 +76,6 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.BOOLEAN,
             default: false,
         },
-
         active: {
             type: DataTypes.BOOLEAN,
             defaultValue: true,
@@ -105,14 +109,24 @@ module.exports = (sequelize, DataTypes) => {
             },
         ],
         hooks: {
-            beforeCreate(user) {
+            beforeCreate: async (user) => {
+                if (user.password) {
+                    const salt = bcrypt.genSaltSync(10)
+                    user.password = bcrypt.hashSync(user.password, salt)
+                }
+            },
+            afterCreate: async (user) => {
+                await EmailService.signUpEmail(user.email, user.username)
                 return user
             },
-            afterCreate(user) {
-                EmailService.signUpEmail(user.email, user.username)
-                return user
+            beforeUpdate: async (user) => {
+                if (user.password) {
+                    const salt = bcrypt.genSaltSync(10)
+                    user.password = bcrypt.hashSync(user.password, salt)
+                }
             },
         },
+
     })
 
     // class methods
@@ -124,6 +138,10 @@ module.exports = (sequelize, DataTypes) => {
     // User.prototype.toJSON = function () {
     //     return {};
     // };
+
+    User.prototype.validatePassword = async function (password) {
+        return bcrypt.compare(password, this.password)
+    }
 
     return User
 }

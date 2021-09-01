@@ -10,6 +10,7 @@ class RoleService extends AccountResourceService {
                 name: 'Super Admin',
                 value: 'super_admin',
                 permissions: {
+                    Accounts: ['*'],
                     Roles: ['*'],
                     Users: ['*'],
                 },

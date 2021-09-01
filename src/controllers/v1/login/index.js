@@ -1,36 +1,39 @@
 const jwt = require('jsonwebtoken')
-const { UserService } = require('../../../services/resources')
+const { UserService, AccountService } = require('../../../services/resources')
+const config = require('../../../../config')
 const storage = require('../../../utils/cl-storage')
 
-const all = async (req, res, next) => {
-    try {
-        const users = await UserService.all()
-        res.send(users)
-    } catch (error) {
-        next(error)
-    }
-}
 const login = async (req, res, next) => {
     try {
-        const loginData = req.body
-        const user = await UserService.findByQuery({ email: loginData.email }, true)
+        const { domain, credentials } = req.body
 
-        if (!user) {
-            res.send({ message: 'Email and Password Not Found' })
-        } else
-        if (loginData.password !== user.password) {
-            res.send({ message: 'Email and Password Not Found' })
-        } else {
-            const jwtToken = jwt.sign(
-                { id: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '100s' },
-            )
+        const account = await AccountService.findByQuery({ tenant_name: domain }, true)
 
-            storage.run(() => {
-                storage.set('user', user)
-                next()
+        if (account) {
+            storage.run(async () => {
+                storage.set('account', account)
+                const user = await UserService.findByQuery({ email: credentials.email }, true)
+
+                if (user) {
+                    const verification = await user.validatePassword(credentials.password)
+                    if (verification) {
+                        const jwtToken = jwt.sign(
+                            {
+                                id: user.id, email: user.email, userName: user.userName, domain,
+                            },
+                            config.jwt.secret, { expiresIn: '2h' },
+                        )
+
+                        res.send({ message: 'Welcome', token: jwtToken })
+                    } else {
+                        throw Error('Password do not match')
+                    }
+                } else {
+                    throw Error('User Not Found')
+                }
             })
-
-            res.send({ message: 'Welcome', token: jwtToken })
+        } else {
+            throw Error('Domain Not Found')
         }
     } catch (error) {
         next(error)
@@ -38,5 +41,5 @@ const login = async (req, res, next) => {
 }
 
 module.exports = {
-    all, login,
+    login,
 }

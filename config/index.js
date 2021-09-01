@@ -9,6 +9,8 @@ const envVarsSchema = Joi.object()
         NODE_ENV: Joi.string().valid('production', 'development', 'test', 'docker').required(),
         SERVER_PORT: Joi.number().default(3000),
         DB_URL: Joi.string().required().description('Mongo DB url'),
+        JWT_SECRET: Joi.string().description('JWT secret for Token generation'),
+        BCRYPT_SECRET: Joi.string().description('BCRYPT secret for Salt generation'),
         SMTP_SENDER_EMAIL: Joi.string().description('SMTP sender Email'),
         SMTP_USERNAME: Joi.string().description('SMTP credential Email'),
         SMTP_PASSWORD: Joi.string().description('SMTP credential Password'),
@@ -32,8 +34,11 @@ module.exports = {
             useUnifiedTopology: true,
         },
     },
+    bcrypt: {
+        secret: env.BCRYPT_SECRET || 'secret',
+    },
     jwt: {
-        secret: env.JWT_SECRET,
+        secret: env.JWT_SECRET || 'secret',
         accessExpirationMinutes: env.JWT_ACCESS_EXPIRATION_MINUTES,
         refreshExpirationDays: env.JWT_REFRESH_EXPIRATION_DAYS,
         resetPasswordExpirationMinutes: env.JWT_RESET_PASSWORD_EXPIRATION_MINUTES,

@@ -6,7 +6,12 @@ const { downcase, removeChars } = require('../utils')
 module.exports = (sequelize, DataTypes) => {
     class Role extends Model {
         static associate(models) {
-            Role.hasMany(models.User, { foreignKey: 'RoleId' })
+            Role.hasMany(models.User, {
+                foreignKey: {
+                    allowNull: false,
+                },
+                onDelete: 'cascade',
+            })
         }
     }
 
