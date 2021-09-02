@@ -50,8 +50,6 @@ if (config.env === 'production') {
 // routes
 app.use('/', require('./src/routes'))
 
-require('./src/utils')
-
 // send back a 404 error for any unknown api request
 app.use((req, res, next) => {
     next(new ApiError(httpStatus.NOT_FOUND, 'Not found'))

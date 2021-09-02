@@ -6,7 +6,7 @@ class AccountResourceService {
     }
 
     async all(query = {}, offset = 0, limit = 20) {
-        const account = storage.get('account')
+        const account = storage.get('account') || { id: 0, tenant_name: 'public' }
 
         return this.model.schema(account.tenant_name).findAll({
             limit,
@@ -16,12 +16,14 @@ class AccountResourceService {
     }
 
     async create(obj = {}) {
-        const account = storage.get('account')
+        const account = storage.get('account') || { id: 0, tenant_name: 'public' }
+
         return this.model.schema(account.tenant_name).create(obj)
     }
 
     async findById(id) {
-        const account = storage.get('account')
+        const account = storage.get('account') || { id: 0, tenant_name: 'public' }
+
         return this.model.schema(account.tenant_name).byId(id)
     }
 
@@ -33,7 +35,8 @@ class AccountResourceService {
         offset = 0,
         limit = 20,
     ) {
-        const account = storage.get('account')
+        const account = storage.get('account') || { id: 0, tenant_name: 'public' }
+
         let attributes = attribs
         if (!(attributes instanceof Array)) {
             attributes = Object.keys(this.model.tableAttributes)
@@ -49,7 +52,8 @@ class AccountResourceService {
     }
 
     async update(obj = {}, query = {}) {
-        const account = storage.get('account')
+        const account = storage.get('account') || { id: 0, tenant_name: 'public' }
+
         const updated = await this.model.schema(account.tenant_name).update(obj, {
             where: query,
             validate: true,
@@ -64,7 +68,8 @@ class AccountResourceService {
     }
 
     async delete(query = {}) {
-        const account = storage.get('account')
+        const account = storage.get('account') || { id: 0, tenant_name: 'public' }
+
         const result = await this.model.schema(account.tenant_name).destroy({ where: query })
         if (!result) {
             throw new Error(`${this.model.name} not found.`)

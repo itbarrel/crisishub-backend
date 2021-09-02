@@ -6,8 +6,12 @@ const storage = require('../../../utils/cl-storage')
 const login = async (req, res, next) => {
     try {
         const { domain, credentials } = req.body
-
-        const account = await AccountService.findByQuery({ tenant_name: domain }, true)
+        let account
+        if (domain) {
+            account = await AccountService.findByQuery({ tenant_name: domain }, true)
+        } else {
+            account = { id: 0, tenant_name: 'public' }
+        }
 
         if (account) {
             storage.run(async () => {
@@ -26,14 +30,14 @@ const login = async (req, res, next) => {
 
                         res.send({ message: 'Welcome', token: jwtToken })
                     } else {
-                        throw Error('Password do not match')
+                        next(new Error('Password do not match'))
                     }
                 } else {
-                    throw Error('User Not Found')
+                    next(new Error('User Not Found'))
                 }
             })
         } else {
-            throw Error('Domain Not Found')
+            next(new Error('Password do not match'))
         }
     } catch (error) {
         next(error)
