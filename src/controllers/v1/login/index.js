@@ -6,6 +6,7 @@ const storage = require('../../../utils/cl-storage')
 const login = async (req, res, next) => {
     try {
         const { domain, credentials } = req.body
+
         let account
         if (domain) {
             account = await AccountService.findByQuery({ tenant_name: domain }, true)

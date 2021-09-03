@@ -1,6 +1,7 @@
 const {
     Model,
 } = require('sequelize')
+
 const { downcase, removeChars } = require('../utils')
 
 // const nonCopyTables = ['Account']
