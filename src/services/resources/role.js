@@ -7,18 +7,7 @@ class RoleService extends AccountResourceService {
 
         this.mainRoles = [
             {
-                name: 'Super Admin',
-                value: 'super_admin',
-                permissions: {
-                    Accounts: ['*'],
-                    Roles: ['*'],
-                    Users: ['*'],
-                },
-                default: true,
-            },
-            {
                 name: 'Admin',
-                value: 'admin',
                 permissions: {
                     Roles: ['*'],
                     Users: ['*'],
@@ -27,13 +16,11 @@ class RoleService extends AccountResourceService {
             },
             {
                 name: 'Information Provider',
-                value: 'ip',
                 permissions: {},
                 default: true,
             },
             {
                 name: 'Information Manager',
-                value: 'im',
                 permissions: {},
                 default: true,
             },
@@ -41,9 +28,9 @@ class RoleService extends AccountResourceService {
     }
 
     async createDefaultRolesFor(account) {
-        return this.mainRoles.forEach(async (role) => {
+        return Promise.all(this.mainRoles.map(async (role) => {
             await this.model.schema(account.tenant_name).create(role)
-        })
+        }))
     }
 }
 
