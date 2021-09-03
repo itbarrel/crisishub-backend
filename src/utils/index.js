@@ -6,5 +6,6 @@ module.exports.transporter = require('./EmailTransportor')
 module.exports.plugMiddleware = require('./plugMiddleware')
 module.exports.passport = require('./passport')
 module.exports.pick = require('./pick')
+module.exports.dynamicConnection = require('./dynamicConnection')
 
 module.exports.downcase = (str) => str.toLowerCase()
