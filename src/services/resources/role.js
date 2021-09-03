@@ -6,16 +6,7 @@ class RoleService extends AccountResourceService {
         super(models.Role)
 
         this.mainRoles = [
-            {
-                name: 'Super Admin',
-                value: 'super_admin',
-                permissions: {
-                    Accounts: ['*'],
-                    Roles: ['*'],
-                    Users: ['*'],
-                },
-                default: true,
-            },
+
             {
                 name: 'Admin',
                 value: 'admin',

@@ -14,7 +14,12 @@ const verifyToken = async (req, res, next) => {
     try {
         storage.run(async () => {
             const decoded = jwt.verify(token, config.jwt.secret)
-            const account = await AccountService.findByQuery({ tenant_name: decoded.domain }, true)
+            let account
+            if (decoded.domain) {
+                account = await AccountService.findByQuery({ tenant_name: decoded.domain }, true)
+            } else {
+                account = { id: 0, tenant_name: 'public' }
+            }
 
             if (account) {
                 storage.set('account', account)

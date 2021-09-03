@@ -4,7 +4,7 @@ module.exports = {
             actionsTocheck: [
                 'view',
             ],
-            entity: 'Accounts',
+            entity: 'Users',
         },
     ],
     create: [
@@ -12,7 +12,7 @@ module.exports = {
             actionsTocheck: [
                 'create',
             ],
-            entity: 'Accounts',
+            entity: 'Users',
         },
     ],
     get: [
@@ -20,7 +20,7 @@ module.exports = {
             actionsTocheck: [
                 'view',
             ],
-            entity: 'Accounts',
+            entity: 'Users',
         },
     ],
     update: [
@@ -28,7 +28,7 @@ module.exports = {
             actionsTocheck: [
                 'update',
             ],
-            entity: 'Accounts',
+            entity: 'Users',
         },
     ],
     delete: [
@@ -36,7 +36,7 @@ module.exports = {
             actionsTocheck: [
                 'delete',
             ],
-            entity: 'Accounts',
+            entity: 'Users',
         },
     ],
 }

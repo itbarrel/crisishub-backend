@@ -1,7 +1,7 @@
 const faker = require('faker')
 const { AccountService } = require('../resources')
 
-const fakeData = true
+const fakeData = false
 const maxfakeCount = 5
 const maxCount = (fakeData) ? maxfakeCount : 1
 let accountObj = {
