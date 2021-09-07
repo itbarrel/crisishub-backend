@@ -48,7 +48,7 @@ class AccountResourceService {
 
         return single
             ? this.model.schema(account.tenant_name).findOne(fullQuery)
-            : this.model.schema(account.tenant_name).find(fullQuery)
+            : this.model.schema(account.tenant_name).findAll(fullQuery)
     }
 
     async update(obj = {}, query = {}) {

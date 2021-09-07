@@ -39,7 +39,7 @@ class ResourceService {
 
         return single
             ? this.model.findOne(fullQuery)
-            : this.model.find(fullQuery)
+            : this.model.findAll(fullQuery)
     }
 
     async update(obj = {}, query = {}) {
