@@ -5,14 +5,14 @@ const accountsController = require('../../controllers/v1/accounts')
 
 const chkPermissions = require('../../middlewares/permissions')
 const validate = require('../../middlewares/validate')
-const { accountPermissions, userPermissions } = require('../../permissions')
+const { accountPermissions } = require('../../permissions')
 
 const { generalValidations, accountValidations } = require('../../validations')
 
 router.get('/', validate(generalValidations.allResources), chkPermissions(accountPermissions.all), accountsController.all)
 
 router.post('/', validate(accountValidations.accountObj),
-    chkPermissions(accountPermissions.create, userPermissions.create), accountsController.create)
+    chkPermissions(accountPermissions.create), accountsController.create)
 
 router.get('/:id', validate(generalValidations.getResource), chkPermissions(accountPermissions.get), accountsController.show)
 
