@@ -1,7 +1,7 @@
 module.exports = {
     up: async (queryInterface, Sequelize) => {
         const upChange = async (schema) => {
-            const table = { schema, tableName: 'roles' }
+            const table = { schema, tableName: 'departments' }
             await queryInterface.createTable(table, {
                 id: {
                     allowNull: false,
@@ -11,35 +11,19 @@ module.exports = {
                 },
                 name: {
                     type: Sequelize.STRING,
-                    allowNull: false,
-                    unique: true,
-                },
-                value: {
-                    type: Sequelize.STRING,
-                    allowNull: false,
-                    unique: true,
-                },
-                permissions: {
-                    type: Sequelize.JSON,
-                },
-                default: {
-                    type: Sequelize.BOOLEAN,
-                    defaultValue: false,
                 },
                 active: {
                     type: Sequelize.BOOLEAN,
-                    defaultValue: false,
+                },
+                deletedAt: {
+                    type: Sequelize.DATE,
                 },
                 createdAt: {
                     allowNull: false,
                     type: Sequelize.DATE,
                 },
                 updatedAt: {
-                    allowNull: true,
-                    type: Sequelize.DATE,
-                },
-                deletedAt: {
-                    allowNull: true,
+                    allowNull: false,
                     type: Sequelize.DATE,
                 },
             })
@@ -54,7 +38,7 @@ module.exports = {
     },
     down: async (queryInterface) => {
         const downChange = async (schema) => {
-            const table = { schema, tableName: 'roles' }
+            const table = { schema, tableName: 'departments' }
             await queryInterface.dropTable(table)
         }
 

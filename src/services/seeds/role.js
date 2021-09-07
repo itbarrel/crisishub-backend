@@ -7,6 +7,7 @@ const superAdminRole = {
         Accounts: ['*'],
         Roles: ['*'],
         Users: ['*'],
+        Departments: ['*'],
     },
     default: true,
 }
