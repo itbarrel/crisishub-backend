@@ -123,7 +123,6 @@ module.exports = (sequelize, DataTypes) => {
                 return user
             },
             beforeUpdate: async (user) => {
-                console.log(user, ',...................,')
                 if (user.password) {
                     const salt = bcrypt.genSaltSync(10)
                     user.password = bcrypt.hashSync(user.password, salt)

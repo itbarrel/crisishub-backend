@@ -87,13 +87,11 @@ const forgetpassword = async (req, res, next) => {
 const resetpassword = async (req, res, next) => {
     try {
         const user = await UserService.findByQuery({ resetPasswordToken: req.body.token }, true)
-        // user.password = req.body.password
-        // await user.save()
-
         const { id } = user
         const resetPassword = { password: req.body.password }
 
         const update = await UserService.update(resetPassword, { id })
+        await UserService.update({ resetPasswordToken: null }, { id })
         res.send(update)
     } catch (error) {
         next(error)
