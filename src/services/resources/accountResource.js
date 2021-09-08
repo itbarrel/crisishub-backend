@@ -60,6 +60,7 @@ class AccountResourceService {
             sideEffects: true,
             paranoid: true,
             returning: true,
+            individualHooks: true,
         })
         if (!updated[1][0]) {
             throw new Error(`${this.model.name} not found.`)

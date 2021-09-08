@@ -7,7 +7,7 @@ const { generalValidations } = require('../../validations')
 
 const validate = require('../../middlewares/validate')
 
-const loginRoute = require('./logIn')
+const authRoute = require('./logIn')
 const accountRoute = require('./accounts')
 const roleRoute = require('./roles')
 const userRoute = require('./users')
@@ -18,7 +18,7 @@ const routes = [
     { path: '/roles', routes: [validate(generalValidations.headers), verifyToken, roleRoute] },
     { path: '/accounts', routes: [validate(generalValidations.headers), verifyToken, accountRoute] },
     { path: '/departments', routes: [validate(generalValidations.headers), verifyToken, departmentRoute] },
-    { path: '/login', routes: [loginRoute] },
+    { path: '/auth', routes: [authRoute] },
 ]
 
 routes.forEach((route) => {
