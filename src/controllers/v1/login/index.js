@@ -22,6 +22,7 @@ const login = async (req, res, next) => {
 
                 if (user) {
                     const verification = await user.validatePassword(credentials.password)
+                    console.log(verification, '............')
                     if (verification) {
                         const jwtToken = jwt.sign(
                             {
@@ -90,8 +91,8 @@ const resetpassword = async (req, res, next) => {
         const { id } = user
         const resetPassword = { password: req.body.password }
 
-        const update = await UserService.update(resetPassword, { id })
-        await UserService.update({ resetPasswordToken: null }, { id })
+        await UserService.update(resetPassword, { id })
+        const update = await UserService.update({ resetPasswordToken: null }, { id })
         res.send(update)
     } catch (error) {
         next(error)

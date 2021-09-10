@@ -39,4 +39,12 @@ module.exports = {
             entity: 'Users',
         },
     ],
+    logged: [
+        {
+            actionsTocheck: [
+                'logIn',
+            ],
+            entity: 'Users',
+        },
+    ],
 }
