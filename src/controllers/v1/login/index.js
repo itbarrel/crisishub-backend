@@ -87,13 +87,31 @@ const forgetpassword = async (req, res, next) => {
 }
 const resetpassword = async (req, res, next) => {
     try {
-        const user = await UserService.findByQuery({ resetPasswordToken: req.body.token }, true)
-        const { id } = user
-        const resetPassword = { password: req.body.password }
+        const { domain, token, password } = req.body
+        let account
+        if (domain) {
+            account = await AccountService.findByQuery({ tenant_name: domain }, true)
+        } else {
+            account = { id: 0, tenant_name: 'public' }
+        }
 
-        await UserService.update(resetPassword, { id })
-        const update = await UserService.update({ resetPasswordToken: null }, { id })
-        res.send(update)
+        if (account) {
+            storage.run(async () => {
+                storage.set('account', account)
+                const user = await UserService.findByQuery({ resetPasswordToken: token }, true)
+                if (user) {
+                    user.password = password
+                    await user.save()
+                    const { id } = user
+                    const update = await UserService.update({ resetPasswordToken: null }, { id })
+                    res.send(update)
+                } else {
+                    next(new Error('User Not Found'))
+                }
+            })
+        } else {
+            next(new Error('Domain Not Found'))
+        }
     } catch (error) {
         next(error)
     }
