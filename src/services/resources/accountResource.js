@@ -23,8 +23,7 @@ class AccountResourceService {
 
     async findById(id) {
         const account = storage.get('account') || { id: 0, tenant_name: 'public' }
-
-        return this.model.schema(account.tenant_name).byId(id)
+        return this.model.byId(id, account.tenant_name)
     }
 
     async findByQuery(

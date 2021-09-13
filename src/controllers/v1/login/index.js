@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const { UserService, AccountService } = require('../../../services/resources')
+const { UserService, AccountService, RoleService } = require('../../../services/resources')
 const config = require('../../../../config')
 const storage = require('../../../utils/cl-storage')
 const { EmailService } = require('../../../services')
@@ -19,10 +19,11 @@ const login = async (req, res, next) => {
             storage.run(async () => {
                 storage.set('account', account)
                 const user = await UserService.findByQuery({ email: credentials.email }, true)
+                const role = await RoleService.findById(user.RoleId)
 
                 if (user) {
                     const verification = await user.validatePassword(credentials.password)
-                    console.log(verification, '............')
+
                     if (verification) {
                         const jwtToken = jwt.sign(
                             {
@@ -31,7 +32,7 @@ const login = async (req, res, next) => {
                             config.jwt.secret, { expiresIn: '2h' },
                         )
 
-                        res.send({ message: 'Welcome', token: jwtToken })
+                        res.send({ message: 'Welcome', token: jwtToken, permissions: role.permissions })
                     } else {
                         next(new Error('Password do not match'))
                     }

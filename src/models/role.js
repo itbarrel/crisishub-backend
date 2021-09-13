@@ -80,7 +80,7 @@ module.exports = (sequelize, DataTypes) => {
     })
 
     // class methods
-    Role.byId = async (id) => Role.findOne({
+    Role.byId = async (id, tenantName) => Role.schema(tenantName).findOne({
         where: { id },
     })
 
