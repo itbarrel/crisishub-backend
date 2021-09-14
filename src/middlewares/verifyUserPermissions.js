@@ -1,19 +1,11 @@
-const jwt = require('jsonwebtoken')
-
-const config = require('../../config')
 const storage = require('../utils/cl-storage')
 
 const { UserService, RoleService } = require('../services/resources')
 
-const verifyToken = async (req, res, next) => {
-    const token = req.headers.token || req.body.token || req.query.token || req.headers['x-access-token']
-
-    if (!token) {
-        return res.status(403).send('A token is required for authentication')
-    }
+const verifyUserPermissions = async (req, res, next) => {
     storage.run(async () => {
         try {
-            const decoded = jwt.verify(token, config.jwt.secret)
+            const decoded = storage.get('decoded')
             const user = await UserService.findByQuery({ userName: decoded.userName })
             if (user) {
                 const role = await RoleService.findByQuery({ id: user.RoleId }, true)
@@ -29,4 +21,4 @@ const verifyToken = async (req, res, next) => {
     })
 }
 
-module.exports = verifyToken
+module.exports = verifyUserPermissions
