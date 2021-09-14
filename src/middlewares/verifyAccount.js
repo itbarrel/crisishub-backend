@@ -24,8 +24,8 @@ const verifyAccount = async (req, res, next) => {
             } else {
                 throw Error('Invalid Domain Token')
             }
-        } catch (err) {
-            return res.status(401).send({ message: 'Invalid Domain Token' })
+        } catch (error) {
+            next(error)
         }
     })
 }

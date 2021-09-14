@@ -15,8 +15,8 @@ const verifyUserPermissions = async (req, res, next) => {
             } else {
                 throw Error('Invalid User Token')
             }
-        } catch (err) {
-            return res.status(401).send({ message: 'Invalid Token' })
+        } catch (error) {
+            next(error)
         }
     })
 }
