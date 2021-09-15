@@ -72,6 +72,8 @@ class AccountResourceService {
         const result = await this.model.schema(account.tenant_name).destroy({ where: query })
         if (!result) {
             throw new Error(`${this.model.name} not found.`)
+        } else {
+            return (result)
         }
     }
 }

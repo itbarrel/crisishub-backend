@@ -6,7 +6,7 @@ const { downcase, removeChars } = require('../utils')
 
 // const nonCopyTables = ['Account']
 
-const modelOrder = ['Role', 'User', 'Department']
+const modelOrder = ['Role', 'User', 'Department', 'Incident']
 
 module.exports = (sequelize, DataTypes) => {
     class Account extends Model {

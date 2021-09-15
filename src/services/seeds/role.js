@@ -8,6 +8,7 @@ const superAdminRole = {
         Roles: ['*'],
         Users: ['*'],
         Departments: ['*'],
+        Incidents: ['*'],
     },
     default: true,
 }
