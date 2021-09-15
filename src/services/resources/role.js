@@ -13,6 +13,7 @@ class RoleService extends AccountResourceService {
                     Users: ['*'],
                     Departments: ['*'],
                     Incidents: ['*'],
+                    Tasks: ['*'],
                 },
                 default: true,
             },

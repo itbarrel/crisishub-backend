@@ -13,6 +13,7 @@ const roleRoute = require('./roles')
 const userRoute = require('./users')
 const departmentRoute = require('./departments')
 const incidentRoute = require('./incidents')
+const taskRoute = require('./tasks')
 
 const verifyAccount = require('../../middlewares/verifyAccount')
 const setDomainFromBody = require('../../middlewares/setDomainFromBody')
@@ -33,6 +34,7 @@ const routes = [
     { path: '/accounts', routes: [...necessaryMiddlewares, accountRoute] },
     { path: '/departments', routes: [...necessaryMiddlewares, departmentRoute] },
     { path: '/incidents', routes: [...necessaryMiddlewares, incidentRoute] },
+    { path: '/tasks', routes: [...necessaryMiddlewares, taskRoute] },
     { path: '/auth', routes: [authRoute] },
 ]
 

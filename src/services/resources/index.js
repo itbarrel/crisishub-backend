@@ -5,6 +5,7 @@ const RoleService = require('./role')
 const UserService = require('./user')
 const DepartmentService = require('./department')
 const IncidentService = require('./incident')
+const TaskService = require('./task')
 
 module.exports = {
     AccountResourceService,
@@ -14,4 +15,5 @@ module.exports = {
     UserService,
     DepartmentService,
     IncidentService,
+    TaskService,
 }

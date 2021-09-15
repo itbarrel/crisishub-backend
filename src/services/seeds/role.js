@@ -9,12 +9,13 @@ const superAdminRole = {
         Users: ['*'],
         Departments: ['*'],
         Incidents: ['*'],
+        Tasks: ['*'],
     },
     default: true,
 }
 
 const create = async () => RoleService.create(superAdminRole)
 
-const destroy = async () => RoleService.delete({})
+const destroy = async () => RoleService.delete(superAdminRole)
 
 module.exports = { create, destroy }
