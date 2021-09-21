@@ -43,7 +43,7 @@ const destroy = async (req, res, next) => {
     try {
         const { id } = req.params
         const task = await TaskService.delete({ id })
-        res.send({ message: 'task is deleted', taskId: task })
+        res.send({ message: 'task is deleted', id: task })
     } catch (error) {
         next(error)
     }

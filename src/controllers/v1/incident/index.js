@@ -44,7 +44,7 @@ const destroy = async (req, res, next) => {
     try {
         const { id } = req.params
         const incident = await IncidentService.delete({ id })
-        res.send({ message: 'incident is deleted', incidentId: incident })
+        res.send({ message: 'incident is deleted', id: incident })
     } catch (error) {
         next(error)
     }

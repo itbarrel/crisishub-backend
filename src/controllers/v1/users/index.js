@@ -44,7 +44,7 @@ const destroy = async (req, res, next) => {
     try {
         const { id } = req.params
         const user = await UserService.delete({ id })
-        res.send({ message: 'user is deleted', userId: user })
+        res.send({ message: 'user is deleted', id: user })
     } catch (error) {
         next(error)
     }
