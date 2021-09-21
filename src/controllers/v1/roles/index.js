@@ -42,8 +42,8 @@ const update = async (req, res, next) => {
 const destroy = async (req, res, next) => {
     try {
         const { id } = req.params
-        const roles = await RoleService.delete(req.body, { id })
-        res.status(200).send(roles)
+        const role = await RoleService.delete({ id })
+        res.send({ message: 'role is deleted', roleId: role })
     } catch (error) {
         next(error)
     }

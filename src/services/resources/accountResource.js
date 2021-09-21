@@ -73,7 +73,7 @@ class AccountResourceService {
         if (!result) {
             throw new Error(`${this.model.name} not found.`)
         } else {
-            return (result)
+            return (`${query.id}`)
         }
     }
 }

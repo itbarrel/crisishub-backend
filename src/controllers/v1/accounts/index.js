@@ -41,7 +41,7 @@ const update = async (req, res, next) => {
 const destroy = async (req, res, next) => {
     try {
         const { id } = req.params
-        const account = await AccountService.delete(req.body, { id })
+        const account = await AccountService.delete({ id })
         res.send(account)
     } catch (error) {
         next(error)
