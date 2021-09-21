@@ -42,8 +42,8 @@ const update = async (req, res, next) => {
 const destroy = async (req, res, next) => {
     try {
         const { id } = req.params
-        const task = await TaskService.delete({ id })
-        res.send({ message: 'task is deleted', id: task })
+        await TaskService.delete({ id })
+        res.send({ message: 'task is deleted' })
     } catch (error) {
         next(error)
     }

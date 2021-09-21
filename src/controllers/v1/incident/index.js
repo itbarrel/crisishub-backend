@@ -43,8 +43,8 @@ const update = async (req, res, next) => {
 const destroy = async (req, res, next) => {
     try {
         const { id } = req.params
-        const incident = await IncidentService.delete({ id })
-        res.send({ message: 'incident is deleted', id: incident })
+        await IncidentService.delete({ id })
+        res.send({ message: 'incident is deleted' })
     } catch (error) {
         next(error)
     }
