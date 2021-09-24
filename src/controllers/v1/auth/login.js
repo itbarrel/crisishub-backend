@@ -19,7 +19,9 @@ const login = async (req, res, next) => {
                 }
                 const jwtToken = jwt.sign(decodeObj, config.jwt.secret, { expiresIn: '2h' })
 
-                res.send({ message: 'Welcome', token: jwtToken, permissions: role.permissions })
+                res.send({
+                    message: 'Welcome', token: jwtToken, permissions: role.permissions, user,
+                })
             } else {
                 next(new Error('Password do not match'))
             }
