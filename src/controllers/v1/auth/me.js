@@ -5,25 +5,19 @@ const storage = require('../../../utils/cl-storage')
 
 const me = async (req, res, next) => {
     try {
-        const domain = storage.get('domain')
-        const { token } = req.body
+        const decoded = storage.get('decoded')
 
-        if (token) {
-            const decodeObj = jwt.verify(token, config.jwt.secret)
-            if (decodeObj) {
-                const user = await UserService.findByQuery({ email: decodeObj.email }, true)
-                const role = await RoleService.findById(user.RoleId)
-                const tokenObj = {
-                    id: decodeObj.id, email: decodeObj.email, userName: decodeObj.userName, domain,
-                }
-                const jwtToken = jwt.sign(tokenObj, config.jwt.secret, { expiresIn: '2h' })
-
-                res.send({ message: 'Welcome', token: jwtToken, permissions: role.permissions })
-            } else {
-                next(new Error('Token not Verify'))
+        if (decoded && decoded.userName && decoded.domain) {
+            const user = await UserService.findByQuery({ email: decoded.email }, true)
+            const role = await RoleService.findById(user.RoleId)
+            const tokenObj = {
+                id: user.id, email: user.email, userName: user.userName, domain: decoded.domain,
             }
+            const jwtToken = jwt.sign(tokenObj, config.jwt.secret, { expiresIn: '2h' })
+
+            res.send({ message: 'Welcome', token: jwtToken, permissions: role.permissions })
         } else {
-            next(new Error('Token Not Found'))
+            next(new Error('Token Not Verified'))
         }
     } catch (error) {
         next(error)
