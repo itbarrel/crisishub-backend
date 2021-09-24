@@ -12,8 +12,8 @@ const all = async (req, res, next) => {
 const create = async (req, res, next) => {
     try {
         const register = req.body
-        const roles = await RoleService.create(register)
-        res.send({ message: 'Roles is created', roles })
+        const role = await RoleService.create(register)
+        res.send({ message: 'Roles is created', role })
     } catch (error) {
         next(error)
     }
@@ -49,6 +49,15 @@ const destroy = async (req, res, next) => {
     }
 }
 
+const entities = async (req, res, next) => {
+    try {
+        const permissionEntities = await RoleService.getPermissionEntities()
+        res.send(permissionEntities)
+    } catch (error) {
+        next(error)
+    }
+}
+
 module.exports = {
-    all, create, show, update, destroy,
+    all, create, show, update, destroy, entities,
 }

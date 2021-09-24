@@ -26,10 +26,7 @@ const necessaryMiddlewares = [
 ]
 
 const routes = [
-    {
-        path: '/users',
-        routes: [...necessaryMiddlewares, userRoute],
-    },
+    { path: '/users', routes: [...necessaryMiddlewares, userRoute] },
     { path: '/roles', routes: [...necessaryMiddlewares, roleRoute] },
     { path: '/accounts', routes: [...necessaryMiddlewares, accountRoute] },
     { path: '/departments', routes: [...necessaryMiddlewares, departmentRoute] },
