@@ -6,7 +6,7 @@ const verifyUserPermissions = async (req, res, next) => {
     storage.run(async () => {
         try {
             const decoded = storage.get('decoded')
-            const user = await UserService.findByQuery({ userName: decoded.userName })
+            const user = await UserService.findByQuery({ id: decoded.id })
             if (user) {
                 const role = await RoleService.findByQuery({ id: user.RoleId }, true)
                 storage.set('user', user)
