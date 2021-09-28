@@ -1,4 +1,3 @@
-const AccountResourceService = require('./accountResource')
 const ResourceService = require('./resource')
 const AccountService = require('./account')
 const RoleService = require('./role')
@@ -8,7 +7,6 @@ const IncidentService = require('./incident')
 const TaskService = require('./task')
 
 module.exports = {
-    AccountResourceService,
     ResourceService,
     AccountService,
     RoleService,

@@ -1,9 +1,14 @@
 const models = require('../../models')
-const AccountResourceService = require('./accountResource')
+const storage = require('../../utils/cl-storage')
 
-class RoleService extends AccountResourceService {
+const ResourceService = require('./resource')
+
+class RoleService extends ResourceService {
     constructor() {
-        super(models.Role)
+        const decoded = storage.get('decoded')
+        const { domain } = decoded
+        const schemaModels = models(domain)
+        super(schemaModels.Role)
 
         this.mainRoles = [
             {
@@ -45,4 +50,4 @@ class RoleService extends AccountResourceService {
     }
 }
 
-module.exports = new RoleService()
+module.exports = RoleService

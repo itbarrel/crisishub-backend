@@ -1,11 +1,15 @@
 const models = require('../../models')
+const storage = require('../../utils/cl-storage')
 
-const AccountResourceService = require('./accountResource')
+const ResourceService = require('./resource')
 const RoleService = require('./role')
 
-class UserService extends AccountResourceService {
+class UserService extends ResourceService {
     constructor() {
-        super(models.User)
+        const decoded = storage.get('decoded')
+        const { domain } = decoded
+        const schemaModels = models(domain)
+        super(schemaModels.User)
     }
 
     async createDefaultUsersFor(account, userObj) {
@@ -15,4 +19,4 @@ class UserService extends AccountResourceService {
     }
 }
 
-module.exports = new UserService()
+module.exports = UserService

@@ -1,8 +1,13 @@
 const { AccountService } = require('../../../services/resources')
+const storage = require('../../../utils/cl-storage')
 
 const all = async (req, res, next) => {
     try {
-        const accounts = await AccountService.all()
+        const domain = storage.get('domain')
+        const Account = new AccountService(domain)
+
+        const accounts = await Account.all()
+
         res.send(accounts)
     } catch (error) {
         next(error)
@@ -11,7 +16,11 @@ const all = async (req, res, next) => {
 
 const create = async (req, res, next) => {
     try {
-        const account = await AccountService.create(req.body)
+        const domain = storage.get('domain')
+        const Account = new AccountService(domain)
+
+        const account = await Account.create(req.body)
+
         res.send(account)
     } catch (error) {
         next(error)
@@ -20,8 +29,12 @@ const create = async (req, res, next) => {
 
 const show = async (req, res, next) => {
     try {
+        const domain = storage.get('domain')
+        const Account = new AccountService(domain)
+
         const { id } = req.params
-        const account = await AccountService.findById(id)
+        const account = await Account.findById(id)
+
         res.send(account)
     } catch (error) {
         next(error)
@@ -30,8 +43,12 @@ const show = async (req, res, next) => {
 
 const update = async (req, res, next) => {
     try {
+        const domain = storage.get('domain')
+        const Account = new AccountService(domain)
+
         const { id } = req.params
-        const account = await AccountService.update(req.body, { id })
+        const account = await Account.update(req.body, { id })
+
         res.send(account)
     } catch (error) {
         next(error)
@@ -40,8 +57,12 @@ const update = async (req, res, next) => {
 
 const destroy = async (req, res, next) => {
     try {
+        const domain = storage.get('domain')
+        const Account = new AccountService(domain)
+
         const { id } = req.params
-        const account = await AccountService.delete({ id })
+        const account = await Account.delete({ id })
+
         res.send(account)
     } catch (error) {
         next(error)

@@ -9,7 +9,6 @@ class ResourceService {
             offset: offset * (limit + 1),
             where: query,
         })
-        // .schema(account.tenant_name)
     }
 
     async create(obj = {}) {

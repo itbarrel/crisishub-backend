@@ -1,10 +1,15 @@
 const models = require('../../models')
-const AccountResourceService = require('./accountResource')
+const storage = require('../../utils/cl-storage')
 
-class IncidentService extends AccountResourceService {
+const ResourceService = require('./resource')
+
+class IncidentService extends ResourceService {
     constructor() {
-        super(models.Incident)
+        const decoded = storage.get('decoded')
+        const { domain } = decoded
+        const schemaModels = models(domain)
+        super(schemaModels.Incident)
     }
 }
 
-module.exports = new IncidentService()
+module.exports = IncidentService

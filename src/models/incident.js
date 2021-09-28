@@ -4,10 +4,7 @@ const {
 
 module.exports = (sequelize, DataTypes) => {
     class Incident extends Model {
-
-    // static associate(models) {
-    //   // define association here
-    // }
+        static associate() { }
     }
     Incident.init({
         id: {
