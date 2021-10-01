@@ -1,11 +1,8 @@
 const { UserService } = require('../../../services/resources')
-const storage = require('../../../utils/cl-storage')
 
 const resetPassword = async (req, res, next) => {
     try {
-        const domain = storage.get('domain')
-
-        const User = new UserService(domain)
+        const User = new UserService()
 
         const { token, password } = req.body
 

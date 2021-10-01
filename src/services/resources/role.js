@@ -4,11 +4,12 @@ const storage = require('../../utils/cl-storage')
 const ResourceService = require('./resource')
 
 class RoleService extends ResourceService {
-    constructor() {
+    constructor(tenantName) {
         const decoded = storage.get('decoded')
-        const { domain } = decoded
+        const domain = tenantName || decoded.domain
         const schemaModels = models(domain)
         super(schemaModels.Role)
+        this.domain = domain
 
         this.mainRoles = [
             {
@@ -38,9 +39,9 @@ class RoleService extends ResourceService {
         this.operations = ['*', 'view', 'create', 'update', 'delete']
     }
 
-    async createDefaultRolesFor(account) {
+    async createDefaultRolesFor() {
         return Promise.all(this.mainRoles.map(async (role) => {
-            await this.model.schema(account.tenant_name).create(role)
+            await this.model.create(role)
         }))
     }
 

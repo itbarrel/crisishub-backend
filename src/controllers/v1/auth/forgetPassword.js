@@ -21,12 +21,11 @@ const forgetPassword = async (req, res, next) => {
                 },
                 config.jwt.secret, { expiresIn: '0.5h' },
             )
-
             const { id } = user
             const resetToken = { resetPasswordToken: jwtToken }
-
-            await User.update(resetToken, { id })
-            await EmailService.signUpEmail(user, jwtToken)
+            const updatedUser = await User.update(resetToken, { id })
+            await EmailService.forgetPasswordEmail(updatedUser.email,
+                updatedUser.firstName, updatedUser.resetPasswordToken)
 
             res.send({ message: 'Forget Password', Token: jwtToken })
         } else {

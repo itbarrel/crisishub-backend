@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken')
-
 const config = require('../../config')
 const storage = require('../utils/cl-storage')
 
@@ -27,6 +26,9 @@ const setDomainFromBody = (isBody) => (req, res, next) => {
                 return res.status(404).send({ message: 'Invalid Domain Found' })
             }
         } catch (error) {
+            if (error === 'jwt expired') {
+                return res.status(401).send('jwt is expired')
+            }
             next(error)
         }
     })

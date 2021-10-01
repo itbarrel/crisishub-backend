@@ -4,9 +4,8 @@ const storage = require('../../../utils/cl-storage')
 const changepassword = async (req, res, next) => {
     try {
         const decoded = storage.get('decoded')
-        const domain = storage.get('domain')
 
-        const User = new UserService(domain)
+        const User = new UserService()
 
         const { oldPassword, newPassword } = req.body
         const user = await User.findByQuery({ email: decoded.email }, true)

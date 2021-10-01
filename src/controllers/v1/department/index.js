@@ -1,10 +1,8 @@
 const { DepartmentService } = require('../../../services/resources')
-const storage = require('../../../utils/cl-storage')
 
 const all = async (req, res, next) => {
     try {
-        const domain = storage.get('domain')
-        const Department = new DepartmentService(domain)
+        const Department = new DepartmentService()
 
         const departments = await Department.all()
 
@@ -16,8 +14,7 @@ const all = async (req, res, next) => {
 
 const create = async (req, res, next) => {
     try {
-        const domain = storage.get('domain')
-        const Department = new DepartmentService(domain)
+        const Department = new DepartmentService()
 
         const departmentObj = req.body
         const department = await Department.create(departmentObj)
@@ -30,8 +27,7 @@ const create = async (req, res, next) => {
 
 const show = async (req, res, next) => {
     try {
-        const domain = storage.get('domain')
-        const Department = new DepartmentService(domain)
+        const Department = new DepartmentService()
 
         const { id } = req.params
         const department = await Department.findById(id)
@@ -44,8 +40,7 @@ const show = async (req, res, next) => {
 
 const update = async (req, res, next) => {
     try {
-        const domain = storage.get('domain')
-        const Department = new DepartmentService(domain)
+        const Department = new DepartmentService()
 
         const { id } = req.params
         const department = await Department.update(req.body, { id })
@@ -58,8 +53,7 @@ const update = async (req, res, next) => {
 
 const destroy = async (req, res, next) => {
     try {
-        const domain = storage.get('domain')
-        const Department = new DepartmentService(domain)
+        const Department = new DepartmentService()
 
         const { id } = req.params
         await Department.delete({ id })

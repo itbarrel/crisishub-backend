@@ -1,10 +1,8 @@
 const { TaskService } = require('../../../services/resources')
-const storage = require('../../../utils/cl-storage')
 
 const all = async (req, res, next) => {
     try {
-        const domain = storage.get('domain')
-        const Task = new TaskService(domain)
+        const Task = new TaskService()
 
         const task = await Task.all()
 
@@ -16,8 +14,7 @@ const all = async (req, res, next) => {
 
 const create = async (req, res, next) => {
     try {
-        const domain = storage.get('domain')
-        const Task = new TaskService(domain)
+        const Task = new TaskService()
 
         const taskObj = req.body
         const task = await Task.create(taskObj)
@@ -30,8 +27,7 @@ const create = async (req, res, next) => {
 
 const show = async (req, res, next) => {
     try {
-        const domain = storage.get('domain')
-        const Task = new TaskService(domain)
+        const Task = new TaskService()
 
         const { id } = req.params
         const task = await Task.findById(id)
@@ -44,8 +40,7 @@ const show = async (req, res, next) => {
 
 const update = async (req, res, next) => {
     try {
-        const domain = storage.get('domain')
-        const Task = new TaskService(domain)
+        const Task = new TaskService()
 
         const { id } = req.params
         const task = await Task.update(req.body, { id })
@@ -58,8 +53,7 @@ const update = async (req, res, next) => {
 
 const destroy = async (req, res, next) => {
     try {
-        const domain = storage.get('domain')
-        const Task = new TaskService(domain)
+        const Task = new TaskService()
 
         const { id } = req.params
         await Task.delete({ id })
