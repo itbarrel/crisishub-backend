@@ -7,9 +7,8 @@ const storage = require('../../../utils/cl-storage')
 const me = async (req, res, next) => {
     try {
         const decoded = storage.get('decoded')
-        const domain = storage.get('domain')
 
-        const User = new UserService(domain)
+        const User = new UserService()
 
         if (decoded && decoded.userName && decoded.domain) {
             const user = await User.findByQuery({ email: decoded.email }, true)

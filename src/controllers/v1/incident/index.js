@@ -1,10 +1,8 @@
 const { IncidentService } = require('../../../services/resources')
-const storage = require('../../../utils/cl-storage')
 
 const all = async (req, res, next) => {
     try {
-        const domain = storage.get('domain')
-        const Incident = new IncidentService(domain)
+        const Incident = new IncidentService()
 
         const incidents = await Incident.all()
 
@@ -16,8 +14,7 @@ const all = async (req, res, next) => {
 
 const create = async (req, res, next) => {
     try {
-        const domain = storage.get('domain')
-        const Incident = new IncidentService(domain)
+        const Incident = new IncidentService()
 
         const incidentObj = req.body
         const incident = await Incident.create(incidentObj)
@@ -30,8 +27,7 @@ const create = async (req, res, next) => {
 
 const show = async (req, res, next) => {
     try {
-        const domain = storage.get('domain')
-        const Incident = new IncidentService(domain)
+        const Incident = new IncidentService()
 
         const { id } = req.params
         const incident = await Incident.findById(id)
@@ -44,8 +40,7 @@ const show = async (req, res, next) => {
 
 const update = async (req, res, next) => {
     try {
-        const domain = storage.get('domain')
-        const Incident = new IncidentService(domain)
+        const Incident = new IncidentService()
 
         const { id } = req.params
         const incident = await Incident.update(req.body, { id })
@@ -58,8 +53,7 @@ const update = async (req, res, next) => {
 
 const destroy = async (req, res, next) => {
     try {
-        const domain = storage.get('domain')
-        const Incident = new IncidentService(domain)
+        const Incident = new IncidentService()
 
         const { id } = req.params
         await Incident.delete({ id })

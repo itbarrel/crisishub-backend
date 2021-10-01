@@ -1,10 +1,8 @@
 const { RoleService } = require('../../../services/resources')
-const storage = require('../../../utils/cl-storage')
 
 const all = async (req, res, next) => {
     try {
-        const domain = storage.get('domain')
-        const Role = new RoleService(domain)
+        const Role = new RoleService()
 
         const roles = await Role.all()
 
@@ -16,8 +14,7 @@ const all = async (req, res, next) => {
 
 const create = async (req, res, next) => {
     try {
-        const domain = storage.get('domain')
-        const Role = new RoleService(domain)
+        const Role = new RoleService()
 
         const register = req.body
         const role = await Role.create(register)
@@ -30,8 +27,7 @@ const create = async (req, res, next) => {
 
 const show = async (req, res, next) => {
     try {
-        const domain = storage.get('domain')
-        const Role = new RoleService(domain)
+        const Role = new RoleService()
 
         const { id } = req.params
         const roles = await Role.findById(id)
@@ -44,8 +40,7 @@ const show = async (req, res, next) => {
 
 const update = async (req, res, next) => {
     try {
-        const domain = storage.get('domain')
-        const Role = new RoleService(domain)
+        const Role = new RoleService()
 
         const { id } = req.params
         const roles = await Role.update(req.body, { id })
@@ -58,8 +53,7 @@ const update = async (req, res, next) => {
 
 const destroy = async (req, res, next) => {
     try {
-        const domain = storage.get('domain')
-        const Role = new RoleService(domain)
+        const Role = new RoleService()
 
         const { id } = req.params
         await Role.delete({ id })
@@ -72,8 +66,7 @@ const destroy = async (req, res, next) => {
 
 const entities = async (req, res, next) => {
     try {
-        const domain = storage.get('domain')
-        const Role = new RoleService(domain)
+        const Role = new RoleService()
 
         const permissionEntities = await Role.getPermissionEntities()
 
