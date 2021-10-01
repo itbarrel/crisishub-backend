@@ -119,7 +119,7 @@ module.exports = (sequelize, DataTypes) => {
                 }
             },
             afterCreate: async (user) => {
-                await EmailService.signUpEmail(user.email, user.username)
+                await EmailService.signUpEmail(user.email, user.userName, user.password)
                 return user
             },
             beforeUpdate: async (user) => {
