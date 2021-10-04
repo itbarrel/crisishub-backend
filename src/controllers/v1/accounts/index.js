@@ -1,10 +1,8 @@
 const { AccountService } = require('../../../services/resources')
-const storage = require('../../../utils/cl-storage')
 
 const all = async (req, res, next) => {
     try {
-        const domain = storage.get('domain')
-        const Account = new AccountService(domain)
+        const Account = new AccountService()
 
         const accounts = await Account.all()
 
@@ -16,8 +14,7 @@ const all = async (req, res, next) => {
 
 const create = async (req, res, next) => {
     try {
-        const domain = storage.get('domain')
-        const Account = new AccountService(domain)
+        const Account = new AccountService()
 
         const account = await Account.create(req.body)
 
@@ -29,8 +26,7 @@ const create = async (req, res, next) => {
 
 const show = async (req, res, next) => {
     try {
-        const domain = storage.get('domain')
-        const Account = new AccountService(domain)
+        const Account = new AccountService()
 
         const { id } = req.params
         const account = await Account.findById(id)
@@ -43,8 +39,7 @@ const show = async (req, res, next) => {
 
 const update = async (req, res, next) => {
     try {
-        const domain = storage.get('domain')
-        const Account = new AccountService(domain)
+        const Account = new AccountService()
 
         const { id } = req.params
         const account = await Account.update(req.body, { id })
@@ -57,8 +52,7 @@ const update = async (req, res, next) => {
 
 const destroy = async (req, res, next) => {
     try {
-        const domain = storage.get('domain')
-        const Account = new AccountService(domain)
+        const Account = new AccountService()
 
         const { id } = req.params
         const account = await Account.delete({ id })
