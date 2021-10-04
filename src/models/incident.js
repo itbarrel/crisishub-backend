@@ -5,9 +5,9 @@ const {
 module.exports = (sequelize, DataTypes) => {
     class Incident extends Model {
 
-    // static associate(models) {
-    //   // define association here
-    // }
+        // static associate(models) {
+        //   // define association here
+        // }
     }
     Incident.init({
         id: {
@@ -25,6 +25,10 @@ module.exports = (sequelize, DataTypes) => {
         active: {
             type: DataTypes.BOOLEAN,
             defaultValue: true,
+        },
+        status: {
+            type: DataTypes.ENUM,
+            values: ['open', 'on hold', 'close'],
         },
         createdAt: {
             allowNull: false,
