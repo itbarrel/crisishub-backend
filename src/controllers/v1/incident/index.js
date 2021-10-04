@@ -56,9 +56,8 @@ const destroy = async (req, res, next) => {
         const Incident = new IncidentService()
 
         const { id } = req.params
-        await Incident.delete({ id })
-
-        res.send({ message: 'incident is deleted' })
+        const incident = await Incident.checkStatusOnDestroy(id)
+        res.send(incident)
     } catch (error) {
         next(error)
     }
