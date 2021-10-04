@@ -5,6 +5,8 @@ const { AccountService } = require('../services/resources')
 const verifyAccount = async (req, res, next) => {
     const domain = storage.get('domain')
 
+    const Account = new AccountService(domain)
+
     storage.run(async () => {
         try {
             let account
@@ -12,7 +14,7 @@ const verifyAccount = async (req, res, next) => {
                 if (domain === 'public') {
                     account = { id: 0, tenant_name: 'public' }
                 } else {
-                    account = await AccountService.findByQuery({ tenant_name: domain }, true)
+                    account = await Account.findByQuery({ tenant_name: domain }, true)
                 }
             } else {
                 throw Error('Invalid Domain Found')

@@ -9,7 +9,6 @@ const sequelize = require('../utils/dbConnection')
 
 const basename = path.basename(__filename)
 // const config = require(`${__dirname}/../config/config.json`)[env];
-const db = {}
 
 // let sequelize;
 // if (config.use_env_variable) {
@@ -17,22 +16,28 @@ const db = {}
 // } else {
 //   sequelize = new Sequelize(config.database, config.username, config.password, config);
 // }
+const nonTenantModels = ['Account']
 
-fs
-    .readdirSync(__dirname)
-    .filter((file) => (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js'))
-    .forEach((file) => {
-        const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes)
-        db[model.name] = model
+module.exports = (tenant = 'public') => {
+    const db = {}
+
+    fs
+        .readdirSync(__dirname)
+        .filter((file) => (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js'))
+        .forEach((file) => {
+            const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes)
+            if (model.name === 'Acount') return
+            db[model.name] = (nonTenantModels.includes(model.name)) ? model : model.schema(tenant)
+        })
+
+    Object.keys(db).forEach((modelName) => {
+        if (db[modelName].associate) {
+            db[modelName].associate(db)
+        }
     })
 
-Object.keys(db).forEach((modelName) => {
-    if (db[modelName].associate) {
-        db[modelName].associate(db)
-    }
-})
+    db.sequelize = sequelize
+    db.Sequelize = Sequelize
 
-db.sequelize = sequelize
-db.Sequelize = Sequelize
-
-module.exports = db
+    return db
+}

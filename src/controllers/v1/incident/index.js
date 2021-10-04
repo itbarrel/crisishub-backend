@@ -1,8 +1,13 @@
 const { IncidentService } = require('../../../services/resources')
+const storage = require('../../../utils/cl-storage')
 
 const all = async (req, res, next) => {
     try {
-        const incidents = await IncidentService.all()
+        const domain = storage.get('domain')
+        const Incident = new IncidentService(domain)
+
+        const incidents = await Incident.all()
+
         res.send(incidents)
     } catch (error) {
         next(error)
@@ -11,8 +16,11 @@ const all = async (req, res, next) => {
 
 const create = async (req, res, next) => {
     try {
+        const domain = storage.get('domain')
+        const Incident = new IncidentService(domain)
+
         const incidentObj = req.body
-        const incident = await IncidentService.create(incidentObj)
+        const incident = await Incident.create(incidentObj)
 
         res.send(incident)
     } catch (error) {
@@ -22,8 +30,12 @@ const create = async (req, res, next) => {
 
 const show = async (req, res, next) => {
     try {
+        const domain = storage.get('domain')
+        const Incident = new IncidentService(domain)
+
         const { id } = req.params
-        const incident = await IncidentService.findById(id)
+        const incident = await Incident.findById(id)
+
         res.send(incident)
     } catch (error) {
         next(error)
@@ -32,8 +44,12 @@ const show = async (req, res, next) => {
 
 const update = async (req, res, next) => {
     try {
+        const domain = storage.get('domain')
+        const Incident = new IncidentService(domain)
+
         const { id } = req.params
-        const incident = await IncidentService.update(req.body, { id })
+        const incident = await Incident.update(req.body, { id })
+
         res.send(incident)
     } catch (error) {
         next(error)
@@ -42,9 +58,13 @@ const update = async (req, res, next) => {
 
 const destroy = async (req, res, next) => {
     try {
+        const domain = storage.get('domain')
+        const Incident = new IncidentService(domain)
+
         const { id } = req.params
-        const incident = await IncidentService.delete(req.body, { id })
-        res.send({ incident })
+        await Incident.delete({ id })
+
+        res.send({ message: 'incident is deleted' })
     } catch (error) {
         next(error)
     }

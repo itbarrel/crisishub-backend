@@ -1,14 +1,14 @@
-const { AccountService } = require('../../../services/resources')
+const { TaskService } = require('../../../services/resources')
 const storage = require('../../../utils/cl-storage')
 
 const all = async (req, res, next) => {
     try {
         const domain = storage.get('domain')
-        const Account = new AccountService(domain)
+        const Task = new TaskService(domain)
 
-        const accounts = await Account.all()
+        const task = await Task.all()
 
-        res.send(accounts)
+        res.send(task)
     } catch (error) {
         next(error)
     }
@@ -17,11 +17,12 @@ const all = async (req, res, next) => {
 const create = async (req, res, next) => {
     try {
         const domain = storage.get('domain')
-        const Account = new AccountService(domain)
+        const Task = new TaskService(domain)
 
-        const account = await Account.create(req.body)
+        const taskObj = req.body
+        const task = await Task.create(taskObj)
 
-        res.send(account)
+        res.send(task)
     } catch (error) {
         next(error)
     }
@@ -30,12 +31,12 @@ const create = async (req, res, next) => {
 const show = async (req, res, next) => {
     try {
         const domain = storage.get('domain')
-        const Account = new AccountService(domain)
+        const Task = new TaskService(domain)
 
         const { id } = req.params
-        const account = await Account.findById(id)
+        const task = await Task.findById(id)
 
-        res.send(account)
+        res.send(task)
     } catch (error) {
         next(error)
     }
@@ -44,12 +45,12 @@ const show = async (req, res, next) => {
 const update = async (req, res, next) => {
     try {
         const domain = storage.get('domain')
-        const Account = new AccountService(domain)
+        const Task = new TaskService(domain)
 
         const { id } = req.params
-        const account = await Account.update(req.body, { id })
+        const task = await Task.update(req.body, { id })
 
-        res.send(account)
+        res.send(task)
     } catch (error) {
         next(error)
     }
@@ -58,12 +59,12 @@ const update = async (req, res, next) => {
 const destroy = async (req, res, next) => {
     try {
         const domain = storage.get('domain')
-        const Account = new AccountService(domain)
+        const Task = new TaskService(domain)
 
         const { id } = req.params
-        const account = await Account.delete({ id })
+        await Task.delete({ id })
 
-        res.send(account)
+        res.send({ message: 'task is deleted' })
     } catch (error) {
         next(error)
     }

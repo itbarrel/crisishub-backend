@@ -18,4 +18,6 @@ router.put('/:id', validate(generalValidations.getResource),
 router.delete('/:id', validate(generalValidations.getResource),
     chkPermissions(rolePermissions.delete), rolesController.destroy)
 
+router.get('/permissions', chkPermissions(rolePermissions.all), rolesController.entities)
+
 module.exports = router

@@ -23,12 +23,25 @@ class EmailService {
         })
     }
 
-    async signUpEmail(email, name) {
+    async signUpEmail(email, name, password) {
         const mailOptions = {
             from: config.email.from,
             to: email,
             subject: 'Welcome to the Project',
-            text: `Hello ${name}, hope you are fine . Welcome onboard.`,
+            text: `Hello ${name}, hope you are fine . Welcome onboard.your Email is ${email} and Password is ${password}`,
+        }
+
+        await this.sendEmail(mailOptions)
+    }
+
+    async forgetPasswordEmail(email, name, token) {
+        const { frontenddomain } = config
+        const link = `${frontenddomain}auth/reset-password?token=${token}`
+        const mailOptions = {
+            from: config.email.from,
+            to: email,
+            subject: 'Forget Password Email',
+            text: `Hello ${name}, hope you are fine . Welcome onboard. Your Reset Password Link is ${link}`,
         }
 
         await this.sendEmail(mailOptions)

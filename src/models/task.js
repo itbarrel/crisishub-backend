@@ -3,29 +3,33 @@ const {
 } = require('sequelize')
 
 module.exports = (sequelize, DataTypes) => {
-    class Incident extends Model {
+    class Task extends Model {
         static associate() { }
     }
-    Incident.init({
+    Task.init({
         id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
             primaryKey: true,
         },
-        name: {
+        title: {
             type: DataTypes.STRING,
-            allowNull: false,
         },
-        closedDate: {
-            type: DataTypes.DATE,
+        author: {
+            type: DataTypes.STRING,
+        },
+        description: {
+            type: DataTypes.TEXT,
+        },
+        links: {
+            type: DataTypes.STRING,
+        },
+        type: {
+            type: DataTypes.STRING,
         },
         active: {
             type: DataTypes.BOOLEAN,
             defaultValue: true,
-        },
-        status: {
-            type: DataTypes.ENUM,
-            values: ['open', 'on hold', 'close'],
         },
         createdAt: {
             allowNull: false,
@@ -41,9 +45,9 @@ module.exports = (sequelize, DataTypes) => {
         },
     }, {
         sequelize,
-        modelName: 'Incident',
-        tableName: 'incidents',
+        modelName: 'Task',
+        tableName: 'tasks',
         paranoid: true,
     })
-    return Incident
+    return Task
 }

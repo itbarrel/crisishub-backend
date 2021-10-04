@@ -1,10 +1,15 @@
 const models = require('../../models')
-const AccountResourceService = require('./accountResource')
+const storage = require('../../utils/cl-storage')
 
-class DepartmentService extends AccountResourceService {
+const ResourceService = require('./resource')
+
+class DepartmentService extends ResourceService {
     constructor() {
-        super(models.Department)
+        const decoded = storage.get('decoded')
+        const { domain } = decoded
+        const schemaModels = models(domain)
+        super(schemaModels.Department)
     }
 }
 
-module.exports = new DepartmentService()
+module.exports = DepartmentService

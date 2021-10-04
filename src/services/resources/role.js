@@ -1,9 +1,14 @@
 const models = require('../../models')
-const AccountResourceService = require('./accountResource')
+const storage = require('../../utils/cl-storage')
 
-class RoleService extends AccountResourceService {
+const ResourceService = require('./resource')
+
+class RoleService extends ResourceService {
     constructor() {
-        super(models.Role)
+        const decoded = storage.get('decoded')
+        const { domain } = decoded
+        const schemaModels = models(domain)
+        super(schemaModels.Role)
 
         this.mainRoles = [
             {
@@ -13,6 +18,7 @@ class RoleService extends AccountResourceService {
                     Users: ['*'],
                     Departments: ['*'],
                     Incidents: ['*'],
+                    Tasks: ['*'],
                 },
                 default: true,
             },
@@ -27,6 +33,9 @@ class RoleService extends AccountResourceService {
                 default: true,
             },
         ]
+
+        this.entities = ['Roles', 'Users', 'Departments', 'Incidents', 'Tasks']
+        this.operations = ['*', 'view', 'create', 'update', 'delete']
     }
 
     async createDefaultRolesFor(account) {
@@ -34,6 +43,11 @@ class RoleService extends AccountResourceService {
             await this.model.schema(account.tenant_name).create(role)
         }))
     }
+
+    async getPermissionEntities() {
+        const { operations, entities } = this
+        return { operations, entities }
+    }
 }
 
-module.exports = new RoleService()
+module.exports = RoleService

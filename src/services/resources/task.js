@@ -3,13 +3,13 @@ const storage = require('../../utils/cl-storage')
 
 const ResourceService = require('./resource')
 
-class IncidentService extends ResourceService {
+class TaskService extends ResourceService {
     constructor() {
         const decoded = storage.get('decoded')
         const { domain } = decoded
         const schemaModels = models(domain)
-        super(schemaModels.Incident)
+        super(schemaModels.Task)
     }
 }
 
-module.exports = IncidentService
+module.exports = TaskService

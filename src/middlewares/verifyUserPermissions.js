@@ -1,14 +1,18 @@
 const storage = require('../utils/cl-storage')
 
-const { UserService, RoleService } = require('../services/resources')
+const { UserService } = require('../services/resources')
 
 const verifyUserPermissions = async (req, res, next) => {
     storage.run(async () => {
         try {
             const decoded = storage.get('decoded')
-            const user = await UserService.findByQuery({ userName: decoded.userName })
+            const domain = storage.get('domain')
+
+            const User = new UserService(domain)
+
+            const user = await User.findByQuery({ id: decoded.id })
             if (user) {
-                const role = await RoleService.findByQuery({ id: user.RoleId }, true)
+                const role = await user.getRole()
                 storage.set('user', user)
                 storage.set('role', role)
                 next()

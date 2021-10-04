@@ -7,7 +7,10 @@ const UserService = require('./user')
 
 class AccountService extends ResourceService {
     constructor() {
-        super(models.Account)
+        const decoded = storage.get('decoded')
+        const { domain } = decoded
+        const schemaModels = models(domain)
+        super(schemaModels.Account)
     }
 
     async create(obj = {}) {
@@ -26,4 +29,4 @@ class AccountService extends ResourceService {
     }
 }
 
-module.exports = new AccountService()
+module.exports = AccountService

@@ -1,25 +1,37 @@
 const jwt = require('jsonwebtoken')
-const { UserService, RoleService } = require('../../../services/resources')
+
+const { UserService } = require('../../../services/resources')
+
 const config = require('../../../../config')
 const storage = require('../../../utils/cl-storage')
 
 const login = async (req, res, next) => {
     try {
         const domain = storage.get('domain')
-        const { credentials } = req.body
 
-        const user = await UserService.findByQuery({ email: credentials.email }, true)
+        const User = new UserService(domain)
+
+        const { credentials } = req.body
+        const user = await User.findByQuery({ email: credentials.email }, true)
 
         if (user) {
-            const role = await RoleService.findById(user.RoleId)
             const verification = await user.validatePassword(credentials.password)
             if (verification) {
-                const decodeObj = {
-                    id: user.id, email: user.email, userName: user.userName, domain,
-                }
-                const jwtToken = jwt.sign(decodeObj, config.jwt.secret, { expiresIn: '2h' })
+                const role = await user.getRole()
 
-                res.send({ message: 'Welcome', token: jwtToken, permissions: role.permissions })
+                if (role) {
+                    const decodeObj = {
+                        id: user.id, email: user.email, userName: user.userName, domain,
+                    }
+
+                    const jwtToken = jwt.sign(decodeObj, config.jwt.secret, { expiresIn: '2h' })
+
+                    res.send({
+                        message: 'Welcome', token: jwtToken, permissions: role.permissions, user,
+                    })
+                } else {
+                    next(new Error('Role not attached'))
+                }
             } else {
                 next(new Error('Password do not match'))
             }
