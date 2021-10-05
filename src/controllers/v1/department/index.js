@@ -2,9 +2,11 @@ const { DepartmentService } = require('../../../services/resources')
 
 const all = async (req, res, next) => {
     try {
+        const { offset, limit, ...query } = req.query
+
         const Department = new DepartmentService()
 
-        const departments = await Department.all()
+        const departments = await Department.all(query, offset, limit)
 
         res.send(departments)
     } catch (error) {

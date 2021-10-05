@@ -2,9 +2,10 @@ const { AccountService } = require('../../../services/resources')
 
 const all = async (req, res, next) => {
     try {
+        const { offset, limit, ...query } = req.query
         const Account = new AccountService()
 
-        const accounts = await Account.all()
+        const accounts = await Account.all(query, offset, limit)
 
         res.send(accounts)
     } catch (error) {

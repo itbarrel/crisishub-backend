@@ -10,7 +10,7 @@ const allResources = {
     query: Joi.object().keys({
         limit: Joi.number().integer(),
         offset: Joi.number().integer(),
-    }),
+    }).options({ allowUnknown: true }),
 }
 
 const getResource = {

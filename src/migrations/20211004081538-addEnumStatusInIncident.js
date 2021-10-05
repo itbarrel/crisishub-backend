@@ -7,7 +7,7 @@ module.exports = {
                 'status',
                 {
                     type: Sequelize.ENUM,
-                    values: ['open', 'on hold', 'close'],
+                    values: ['open', 'hold', 'close'],
                 },
             )
         }
@@ -29,9 +29,10 @@ module.exports = {
                 'status',
                 {
                     type: Sequelize.ENUM,
-                    values: ['open', 'on hold', 'close'],
+                    values: ['open', 'hold', 'close'],
                 },
             )
+            await queryInterface.sequelize.query('drop type enum_incidents_status;')
         }
 
         await downChange('public')

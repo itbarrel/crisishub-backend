@@ -2,9 +2,11 @@ const { IncidentService } = require('../../../services/resources')
 
 const all = async (req, res, next) => {
     try {
+        const { offset, limit, ...query } = req.query
+
         const Incident = new IncidentService()
 
-        const incidents = await Incident.all()
+        const incidents = await Incident.all(query, offset, limit)
 
         res.send(incidents)
     } catch (error) {

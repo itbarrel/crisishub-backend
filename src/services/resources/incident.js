@@ -17,7 +17,7 @@ class IncidentService extends ResourceService {
         if (incident) {
             if (incident.status === 'open') {
                 throw new Error('Cannot Delete the Incident')
-            } else if (incident.status === 'on hold') {
+            } else if (incident.status === 'hold') {
                 incident.status = 'close'
                 await incident.save()
                 return ({ message: 'Incident is close now! you may delete incident now' })

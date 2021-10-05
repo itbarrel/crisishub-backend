@@ -2,9 +2,11 @@ const { TaskService } = require('../../../services/resources')
 
 const all = async (req, res, next) => {
     try {
+        const { offset, limit, ...query } = req.query
+
         const Task = new TaskService()
 
-        const task = await Task.all()
+        const task = await Task.all(query, offset, limit)
 
         res.send(task)
     } catch (error) {

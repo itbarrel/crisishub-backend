@@ -2,9 +2,11 @@ const { RoleService } = require('../../../services/resources')
 
 const all = async (req, res, next) => {
     try {
+        const { offset, limit, ...query } = req.query
+
         const Role = new RoleService()
 
-        const roles = await Role.all()
+        const roles = await Role.all(query, offset, limit)
 
         res.send(roles)
     } catch (error) {
