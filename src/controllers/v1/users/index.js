@@ -6,9 +6,9 @@ const all = async (req, res, next) => {
 
         const User = new UserService()
 
-        const users = await User.all(query, offset, limit)
+        const { docs, pages, total } = await User.all(query, offset, limit)
 
-        res.send(users)
+        res.send({ data: docs, pages, total })
     } catch (error) {
         next(error)
     }

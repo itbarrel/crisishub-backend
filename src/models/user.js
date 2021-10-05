@@ -2,6 +2,7 @@ const {
     Model,
 } = require('sequelize')
 const bcrypt = require('bcrypt')
+const sequelizePaginate = require('sequelize-paginate')
 const { EmailService } = require('../services')
 
 module.exports = (sequelize, DataTypes) => {
@@ -145,6 +146,6 @@ module.exports = (sequelize, DataTypes) => {
     User.prototype.validatePassword = async function (password) {
         return bcrypt.compare(password, this.password)
     }
-
+    sequelizePaginate.paginate(User)
     return User
 }

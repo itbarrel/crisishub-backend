@@ -6,9 +6,9 @@ const all = async (req, res, next) => {
 
         const Task = new TaskService()
 
-        const task = await Task.all(query, offset, limit)
+        const { docs, pages, total } = await Task.all(query, offset, limit)
 
-        res.send(task)
+        res.send({ data: docs, pages, total })
     } catch (error) {
         next(error)
     }

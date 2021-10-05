@@ -6,9 +6,9 @@ const all = async (req, res, next) => {
 
         const Department = new DepartmentService()
 
-        const departments = await Department.all(query, offset, limit)
+        const { docs, pages, total } = await Department.all(query, offset, limit)
 
-        res.send(departments)
+        res.send({ data: docs, pages, total })
     } catch (error) {
         next(error)
     }

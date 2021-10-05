@@ -3,12 +3,15 @@ class ResourceService {
         this.model = model
     }
 
-    async all(query = {}, offset = 0, limit = 20) {
-        return this.model.findAll({
-            limit,
-            offset: offset * (limit + 1),
+    async all(query = {}, offset = 1, limit = 1) {
+        const options = {
+            // offset: offset * (limit + 1),
             where: query,
-        })
+            page: offset,
+            paginate: limit,
+
+        }
+        return this.model.paginate(options)
     }
 
     async create(obj = {}) {

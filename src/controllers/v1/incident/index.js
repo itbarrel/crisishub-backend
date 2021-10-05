@@ -6,9 +6,9 @@ const all = async (req, res, next) => {
 
         const Incident = new IncidentService()
 
-        const incidents = await Incident.all(query, offset, limit)
+        const { docs, pages, total } = await Incident.all(query, offset, limit)
 
-        res.send(incidents)
+        res.send({ data: docs, pages, total })
     } catch (error) {
         next(error)
     }

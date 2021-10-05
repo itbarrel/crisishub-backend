@@ -1,7 +1,7 @@
 const {
     Model,
 } = require('sequelize')
-
+const sequelizePaginate = require('sequelize-paginate')
 const { downcase, removeChars } = require('../utils')
 
 // const nonCopyTables = ['Account']
@@ -95,6 +95,7 @@ module.exports = (sequelize, DataTypes) => {
     // };
 
     // Account.plugin(paginate);
+    sequelizePaginate.paginate(Account)
 
     return Account
 }

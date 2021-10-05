@@ -1,6 +1,7 @@
 const {
     Model,
 } = require('sequelize')
+const sequelizePaginate = require('sequelize-paginate')
 const { downcase, removeChars } = require('../utils')
 
 module.exports = (sequelize, DataTypes) => {
@@ -90,6 +91,7 @@ module.exports = (sequelize, DataTypes) => {
     // };
 
     // Role.plugin(paginate);
+    sequelizePaginate.paginate(Role)
 
     return Role
 }

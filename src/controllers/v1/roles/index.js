@@ -6,9 +6,9 @@ const all = async (req, res, next) => {
 
         const Role = new RoleService()
 
-        const roles = await Role.all(query, offset, limit)
+        const { docs, pages, total } = await Role.all(query, offset, limit)
 
-        res.send(roles)
+        res.send({ data: docs, pages, total })
     } catch (error) {
         next(error)
     }

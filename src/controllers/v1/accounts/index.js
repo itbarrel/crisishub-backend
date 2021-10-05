@@ -5,9 +5,9 @@ const all = async (req, res, next) => {
         const { offset, limit, ...query } = req.query
         const Account = new AccountService()
 
-        const accounts = await Account.all(query, offset, limit)
+        const { docs, pages, total } = await Account.all(query, offset, limit)
 
-        res.send(accounts)
+        res.send({ data: docs, pages, total })
     } catch (error) {
         next(error)
     }
