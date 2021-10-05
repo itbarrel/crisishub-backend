@@ -7,8 +7,7 @@ module.exports = (permissionsToChk) => async (req, res, next) => {
 
     if (permissionsToChk && permissionsToChk.length > 0) {
         granted = verifyPermission(role, permissionsToChk)
-
         if (granted) next()
-        else return res.send({ message: 'Premission not granted' })
-    } else return res.send({ message: 'Premission not granted' })
+        else return res.status(403).send({ message: 'Premission not granted' })
+    } else return res.status(403).send({ message: 'Premission not granted' })
 }
