@@ -2,7 +2,12 @@ const { DepartmentService } = require('../../../services/resources')
 
 const all = async (req, res, next) => {
     try {
-        const departments = await DepartmentService.all()
+        const { offset, limit, ...query } = req.query
+
+        const Department = new DepartmentService()
+
+        const departments = await Department.all(query, offset, limit)
+
         res.send(departments)
     } catch (error) {
         next(error)
@@ -11,8 +16,10 @@ const all = async (req, res, next) => {
 
 const create = async (req, res, next) => {
     try {
+        const Department = new DepartmentService()
+
         const departmentObj = req.body
-        const department = await DepartmentService.create(departmentObj)
+        const department = await Department.create(departmentObj)
 
         res.send(department)
     } catch (error) {
@@ -22,8 +29,11 @@ const create = async (req, res, next) => {
 
 const show = async (req, res, next) => {
     try {
+        const Department = new DepartmentService()
+
         const { id } = req.params
-        const department = await DepartmentService.findById(id)
+        const department = await Department.findById(id)
+
         res.send(department)
     } catch (error) {
         next(error)
@@ -32,8 +42,11 @@ const show = async (req, res, next) => {
 
 const update = async (req, res, next) => {
     try {
+        const Department = new DepartmentService()
+
         const { id } = req.params
-        const department = await DepartmentService.update(req.body, { id })
+        const department = await Department.update(req.body, { id })
+
         res.send(department)
     } catch (error) {
         next(error)
@@ -42,8 +55,11 @@ const update = async (req, res, next) => {
 
 const destroy = async (req, res, next) => {
     try {
+        const Department = new DepartmentService()
+
         const { id } = req.params
-        await DepartmentService.delete({ id })
+        await Department.delete({ id })
+
         res.send({ message: 'department is deleted' })
     } catch (error) {
         next(error)

@@ -4,10 +4,7 @@ const {
 
 module.exports = (sequelize, DataTypes) => {
     class Task extends Model {
-
-    // static associate(models) {
-    //   // define association here
-    // }
+        static associate() { }
     }
     Task.init({
         id: {

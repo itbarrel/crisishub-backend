@@ -2,15 +2,16 @@ const { UserService } = require('../../../services/resources')
 
 const resetPassword = async (req, res, next) => {
     try {
+        const User = new UserService()
+
         const { token, password } = req.body
 
-        const user = await UserService.findByQuery({ resetPasswordToken: token }, true)
+        const user = await User.findByQuery({ resetPasswordToken: token }, true)
         if (user) {
             user.password = password
+            user.resetPasswordToken = null
             await user.save()
-            const { id } = user
-            const update = await UserService.update({ resetPasswordToken: null }, { id })
-            res.send(update)
+            res.send({ message: 'Password reset successfully' })
         } else {
             next(new Error('User Not Found'))
         }

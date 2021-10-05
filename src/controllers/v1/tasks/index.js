@@ -2,7 +2,12 @@ const { TaskService } = require('../../../services/resources')
 
 const all = async (req, res, next) => {
     try {
-        const task = await TaskService.all()
+        const { offset, limit, ...query } = req.query
+
+        const Task = new TaskService()
+
+        const task = await Task.all(query, offset, limit)
+
         res.send(task)
     } catch (error) {
         next(error)
@@ -11,8 +16,11 @@ const all = async (req, res, next) => {
 
 const create = async (req, res, next) => {
     try {
+        const Task = new TaskService()
+
         const taskObj = req.body
-        const task = await TaskService.create(taskObj)
+        const task = await Task.create(taskObj)
+
         res.send(task)
     } catch (error) {
         next(error)
@@ -21,8 +29,11 @@ const create = async (req, res, next) => {
 
 const show = async (req, res, next) => {
     try {
+        const Task = new TaskService()
+
         const { id } = req.params
-        const task = await TaskService.findById(id)
+        const task = await Task.findById(id)
+
         res.send(task)
     } catch (error) {
         next(error)
@@ -31,8 +42,11 @@ const show = async (req, res, next) => {
 
 const update = async (req, res, next) => {
     try {
+        const Task = new TaskService()
+
         const { id } = req.params
-        const task = await TaskService.update(req.body, { id })
+        const task = await Task.update(req.body, { id })
+
         res.send(task)
     } catch (error) {
         next(error)
@@ -41,8 +55,11 @@ const update = async (req, res, next) => {
 
 const destroy = async (req, res, next) => {
     try {
+        const Task = new TaskService()
+
         const { id } = req.params
-        await TaskService.delete({ id })
+        await Task.delete({ id })
+
         res.send({ message: 'task is deleted' })
     } catch (error) {
         next(error)

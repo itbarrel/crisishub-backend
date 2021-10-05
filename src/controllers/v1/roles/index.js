@@ -2,7 +2,12 @@ const { RoleService } = require('../../../services/resources')
 
 const all = async (req, res, next) => {
     try {
-        const roles = await RoleService.all()
+        const { offset, limit, ...query } = req.query
+
+        const Role = new RoleService()
+
+        const roles = await Role.all(query, offset, limit)
+
         res.send(roles)
     } catch (error) {
         next(error)
@@ -11,8 +16,11 @@ const all = async (req, res, next) => {
 
 const create = async (req, res, next) => {
     try {
+        const Role = new RoleService()
+
         const register = req.body
-        const role = await RoleService.create(register)
+        const role = await Role.create(register)
+
         res.send({ message: 'Roles is created', role })
     } catch (error) {
         next(error)
@@ -21,8 +29,11 @@ const create = async (req, res, next) => {
 
 const show = async (req, res, next) => {
     try {
+        const Role = new RoleService()
+
         const { id } = req.params
-        const roles = await RoleService.findById(id)
+        const roles = await Role.findById(id)
+
         res.send(roles)
     } catch (error) {
         next(error)
@@ -31,8 +42,11 @@ const show = async (req, res, next) => {
 
 const update = async (req, res, next) => {
     try {
+        const Role = new RoleService()
+
         const { id } = req.params
-        const roles = await RoleService.update(req.body, { id })
+        const roles = await Role.update(req.body, { id })
+
         res.send(roles)
     } catch (error) {
         next(error)
@@ -41,8 +55,11 @@ const update = async (req, res, next) => {
 
 const destroy = async (req, res, next) => {
     try {
+        const Role = new RoleService()
+
         const { id } = req.params
-        await RoleService.delete({ id })
+        await Role.delete({ id })
+
         res.send({ message: 'role is deleted' })
     } catch (error) {
         next(error)
@@ -51,7 +68,10 @@ const destroy = async (req, res, next) => {
 
 const entities = async (req, res, next) => {
     try {
-        const permissionEntities = await RoleService.getPermissionEntities()
+        const Role = new RoleService()
+
+        const permissionEntities = await Role.getPermissionEntities()
+
         res.send(permissionEntities)
     } catch (error) {
         next(error)

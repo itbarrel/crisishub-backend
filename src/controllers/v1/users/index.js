@@ -2,7 +2,12 @@ const { UserService } = require('../../../services/resources')
 
 const all = async (req, res, next) => {
     try {
-        const users = await UserService.all()
+        const { offset, limit, ...query } = req.query
+
+        const User = new UserService()
+
+        const users = await User.all(query, offset, limit)
+
         res.send(users)
     } catch (error) {
         next(error)
@@ -11,8 +16,10 @@ const all = async (req, res, next) => {
 
 const create = async (req, res, next) => {
     try {
+        const User = new UserService()
+
         const userObj = req.body
-        const user = await UserService.create(userObj)
+        const user = await User.create(userObj)
 
         res.send({ message: 'Email is send', user })
     } catch (error) {
@@ -22,8 +29,11 @@ const create = async (req, res, next) => {
 
 const show = async (req, res, next) => {
     try {
+        const User = new UserService()
+
         const { id } = req.params
-        const user = await UserService.findById(id)
+        const user = await User.findById(id)
+
         res.send(user)
     } catch (error) {
         next(error)
@@ -32,8 +42,11 @@ const show = async (req, res, next) => {
 
 const update = async (req, res, next) => {
     try {
+        const User = new UserService()
+
         const { id } = req.params
-        const user = await UserService.update(req.body, { id })
+        const user = await User.update(req.body, { id })
+
         res.send(user)
     } catch (error) {
         next(error)
@@ -42,8 +55,11 @@ const update = async (req, res, next) => {
 
 const destroy = async (req, res, next) => {
     try {
+        const User = new UserService()
+
         const { id } = req.params
-        await UserService.delete({ id })
+        await User.delete({ id })
+
         res.send({ message: 'user is deleted' })
     } catch (error) {
         next(error)

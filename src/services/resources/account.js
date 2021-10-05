@@ -7,7 +7,10 @@ const UserService = require('./user')
 
 class AccountService extends ResourceService {
     constructor() {
-        super(models.Account)
+        const decoded = storage.get('decoded')
+        const { domain } = decoded
+        const schemaModels = models(domain)
+        super(schemaModels.Account)
     }
 
     async create(obj = {}) {
@@ -15,9 +18,11 @@ class AccountService extends ResourceService {
             const { admin, ...accountObj } = obj
             const account = await this.model.create(accountObj)
             storage.set('account', account)
+            const Role = new RoleService(account.tenant_name)
+            const User = new UserService(account.tenant_name)
 
-            await RoleService.createDefaultRolesFor(account)
-            await UserService.createDefaultUsersFor(account, admin)
+            await Role.createDefaultRolesFor()
+            await User.createDefaultUsersFor(admin)
 
             return account
         } catch (error) {
@@ -26,4 +31,4 @@ class AccountService extends ResourceService {
     }
 }
 
-module.exports = new AccountService()
+module.exports = AccountService

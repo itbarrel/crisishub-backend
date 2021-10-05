@@ -2,8 +2,12 @@ const nodemailer = require('nodemailer')
 const config = require('../../config')
 
 const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: config.email.smtp.auth,
+    host: 'smtp.sendgrid.net',
+    port: 587,
+    secure: false, // upgrade later with STARTTLS
+    auth: {
+        user: 'apikey',
+        pass: config.email.smtp.apikey,
+    },
 })
-
 module.exports = transporter

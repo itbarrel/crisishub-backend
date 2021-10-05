@@ -1,10 +1,16 @@
 const models = require('../../models')
-const AccountResourceService = require('./accountResource')
+const storage = require('../../utils/cl-storage')
 
-class TaskService extends AccountResourceService {
-    constructor() {
-        super(models.Task)
+const ResourceService = require('./resource')
+
+class TaskService extends ResourceService {
+    constructor(tenantName) {
+        const decoded = storage.get('decoded')
+        const domain = tenantName || decoded.domain
+        const schemaModels = models(domain)
+        super(schemaModels.Task)
+        this.domain = domain
     }
 }
 
-module.exports = new TaskService()
+module.exports = TaskService

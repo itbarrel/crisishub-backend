@@ -1,18 +1,24 @@
 const models = require('../../models')
+const storage = require('../../utils/cl-storage')
 
-const AccountResourceService = require('./accountResource')
+const ResourceService = require('./resource')
 const RoleService = require('./role')
 
-class UserService extends AccountResourceService {
-    constructor() {
-        super(models.User)
+class UserService extends ResourceService {
+    constructor(tenantName) {
+        const decoded = storage.get('decoded')
+        const domain = tenantName || decoded.domain
+        const schemaModels = models(domain)
+        super(schemaModels.User)
+        this.domain = domain
     }
 
-    async createDefaultUsersFor(account, userObj) {
-        const role = await RoleService.findByQuery({ value: 'admin' })
+    async createDefaultUsersFor(userObj) {
+        const Role = new RoleService(this.domain)
+        const role = await Role.findByQuery({ value: 'admin' })
         userObj.RoleId = role.id
-        await this.model.schema(account.tenant_name).create(userObj)
+        await this.model.create(userObj)
     }
 }
 
-module.exports = new UserService()
+module.exports = UserService

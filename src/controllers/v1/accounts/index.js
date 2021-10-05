@@ -2,7 +2,11 @@ const { AccountService } = require('../../../services/resources')
 
 const all = async (req, res, next) => {
     try {
-        const accounts = await AccountService.all()
+        const { offset, limit, ...query } = req.query
+        const Account = new AccountService()
+
+        const accounts = await Account.all(query, offset, limit)
+
         res.send(accounts)
     } catch (error) {
         next(error)
@@ -11,7 +15,10 @@ const all = async (req, res, next) => {
 
 const create = async (req, res, next) => {
     try {
-        const account = await AccountService.create(req.body)
+        const Account = new AccountService()
+
+        const account = await Account.create(req.body)
+
         res.send(account)
     } catch (error) {
         next(error)
@@ -20,8 +27,11 @@ const create = async (req, res, next) => {
 
 const show = async (req, res, next) => {
     try {
+        const Account = new AccountService()
+
         const { id } = req.params
-        const account = await AccountService.findById(id)
+        const account = await Account.findById(id)
+
         res.send(account)
     } catch (error) {
         next(error)
@@ -30,8 +40,11 @@ const show = async (req, res, next) => {
 
 const update = async (req, res, next) => {
     try {
+        const Account = new AccountService()
+
         const { id } = req.params
-        const account = await AccountService.update(req.body, { id })
+        const account = await Account.update(req.body, { id })
+
         res.send(account)
     } catch (error) {
         next(error)
@@ -40,8 +53,11 @@ const update = async (req, res, next) => {
 
 const destroy = async (req, res, next) => {
     try {
+        const Account = new AccountService()
+
         const { id } = req.params
-        const account = await AccountService.delete({ id })
+        const account = await Account.delete({ id })
+
         res.send(account)
     } catch (error) {
         next(error)
