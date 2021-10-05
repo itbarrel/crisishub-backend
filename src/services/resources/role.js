@@ -29,7 +29,7 @@ class RoleService extends AccountResourceService {
             },
         ]
 
-        this.entities = ['Roles', 'Users', 'Departments', 'Incidents', 'Tasks']
+        this.entities = ['Users', 'Departments', 'Incidents', 'Tasks']
         this.operations = ['*', 'view', 'create', 'update', 'delete']
     }
 
