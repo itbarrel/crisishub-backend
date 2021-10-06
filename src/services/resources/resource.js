@@ -3,7 +3,7 @@ class ResourceService {
         this.model = model
     }
 
-    async all(query = {}, offset = 1, limit = 1) {
+    async all(query = {}, offset = 1, limit = 20) {
         const options = {
             // offset: offset * (limit + 1),
             where: query,
