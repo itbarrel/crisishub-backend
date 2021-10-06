@@ -2,6 +2,8 @@ const jwt = require('jsonwebtoken')
 const config = require('../../config')
 const storage = require('../utils/cl-storage')
 
+const badErrors = ['JsonWebTokenError', 'TokenExpiredError']
+
 const setDomainFromBody = (isBody) => (req, res, next) => {
     storage.run(async () => {
         try {
@@ -26,9 +28,10 @@ const setDomainFromBody = (isBody) => (req, res, next) => {
                 return res.status(404).send({ message: 'Invalid Domain Found' })
             }
         } catch (error) {
-            if (error === 'jwt expired') {
-                return res.status(401).send('jwt is expired')
+            if (error && badErrors.includes(error.name)) {
+                return res.status(401).send({ message: error.message })
             }
+
             next(error)
         }
     })
