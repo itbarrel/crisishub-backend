@@ -1,7 +1,9 @@
 const { RoleService, UserService } = require('../resources')
 
 const create = async () => {
-    const role = await RoleService.findByQuery({ value: 'super_admin' })
+    const User = new UserService('public')
+    const Role = new RoleService('public')
+    const role = await Role.findByQuery({ value: 'super_admin' })
 
     const superAdmin = {
         userName: 'SuperAdmin',
@@ -12,7 +14,7 @@ const create = async () => {
         RoleId: role.id,
     }
 
-    await UserService.create(superAdmin)
+    await User.create(superAdmin)
 }
 
 const destroy = async () => UserService.delete({})

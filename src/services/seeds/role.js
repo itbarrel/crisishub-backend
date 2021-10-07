@@ -13,9 +13,10 @@ const superAdminRole = {
     },
     default: true,
 }
+const Role = new RoleService('public')
 
-const create = async () => RoleService.create(superAdminRole)
+const create = async () => Role.create(superAdminRole)
 
-const destroy = async () => RoleService.delete(superAdminRole)
+const destroy = async () => Role.delete(superAdminRole)
 
 module.exports = { create, destroy }

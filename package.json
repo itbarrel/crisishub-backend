@@ -6,7 +6,7 @@
   "author": "Saad Mahmood",
   "scripts": {
     "start": "node ./bin/www",
-    "start:dev": "nodemon --trace-warnings ./bin/www",
+    "start:dev": "nodemon --exec babel-node --trace-warnings ./bin/www",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "sequelize": "./node_modules/.bin/sequelize",
@@ -47,12 +47,17 @@
     "pg": "^8.6.0",
     "pg-hstore": "^2.3.3",
     "sequelize": "^6.6.2",
+    "sequelize-migration-wrapper": "^1.0.1",
     "sequelize-paginate": "^1.1.6",
     "uuid": "^8.3.2",
     "winston": "^3.3.3",
     "xss-clean": "^0.1.1"
   },
   "devDependencies": {
+    "@babel/cli": "^7.15.7",
+    "@babel/core": "^7.15.5",
+    "@babel/node": "^7.15.4",
+    "@babel/preset-env": "^7.15.6",
     "eslint": "^7.26.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.23.2",
