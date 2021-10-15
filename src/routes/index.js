@@ -1,7 +1,10 @@
 const express = require('express')
+const swaggerUi = require('swagger-ui-express')
 
 const router = express.Router()
 const config = require('../../config')
+const options = require('../swagger/options')
+const swaggerDocument = require('../swagger')
 
 const v1Routes = require('./v1')
 
@@ -16,17 +19,18 @@ const defaultRoutes = [
 
 // routes available only in development mode
 const devRoutes = [
-    // { path: '/docs', route: docsRoute }
+    { path: '/docs', route: swaggerUi.serve },
 ]
-
-defaultRoutes.forEach((route) => {
-    router.use(route.path, route.route)
-})
 
 if (config.env === 'development') {
     devRoutes.forEach((route) => {
         router.use(route.path, route.route)
     })
+    router.get('/docs', swaggerUi.setup(swaggerDocument, options))
 }
+
+defaultRoutes.forEach((route) => {
+    router.use(route.path, route.route)
+})
 
 module.exports = router
