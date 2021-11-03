@@ -5,6 +5,7 @@ const UserService = require('./user')
 const DepartmentService = require('./department')
 const IncidentService = require('./incident')
 const TaskService = require('./task')
+const CustomMessageService = require('./customMessage')
 
 module.exports = {
     ResourceService,
@@ -14,4 +15,6 @@ module.exports = {
     DepartmentService,
     IncidentService,
     TaskService,
+    CustomMessageService,
+
 }

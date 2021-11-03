@@ -10,6 +10,7 @@ const superAdminRole = {
         Departments: ['*'],
         Incidents: ['*'],
         Tasks: ['*'],
+        CustomMessages: ['*'],
     },
     default: true,
 }
