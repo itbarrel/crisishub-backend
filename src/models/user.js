@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
                 },
                 onDelete: 'cascade',
             })
+            User.belongsToMany(models.ColorPalette, { through: 'UserColorPalette' })
         }
     }
 

@@ -10,6 +10,8 @@ const superAdminRole = {
         Departments: ['*'],
         Incidents: ['*'],
         Tasks: ['*'],
+        ColorPalettes: ['*'],
+
     },
     default: true,
 }

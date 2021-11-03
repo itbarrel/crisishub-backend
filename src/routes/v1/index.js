@@ -14,6 +14,7 @@ const userRoute = require('./users')
 const departmentRoute = require('./departments')
 const incidentRoute = require('./incidents')
 const taskRoute = require('./tasks')
+const colorPaletteRoute = require('./colorpalette')
 
 const verifyAccount = require('../../middlewares/verifyAccount')
 const setDomainFromBody = require('../../middlewares/setDomainFromBody')
@@ -32,6 +33,7 @@ const routes = [
     { path: '/departments', routes: [...necessaryMiddlewares, departmentRoute] },
     { path: '/incidents', routes: [...necessaryMiddlewares, incidentRoute] },
     { path: '/tasks', routes: [...necessaryMiddlewares, taskRoute] },
+    { path: '/colorpalettes', routes: [...necessaryMiddlewares, colorPaletteRoute] },
     { path: '/auth', routes: [authRoute] },
 ]
 
