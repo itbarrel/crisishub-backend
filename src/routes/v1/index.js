@@ -16,6 +16,7 @@ const incidentRoute = require('./incidents')
 const taskRoute = require('./tasks')
 const colorPaletteRoute = require('./colorpalette')
 const customMessageRoute = require('./customMessages')
+const scenarioRoute = require('./scenarios')
 
 const verifyAccount = require('../../middlewares/verifyAccount')
 const setDomainFromBody = require('../../middlewares/setDomainFromBody')
@@ -36,6 +37,7 @@ const routes = [
     { path: '/tasks', routes: [...necessaryMiddlewares, taskRoute] },
     { path: '/colorpalettes', routes: [...necessaryMiddlewares, colorPaletteRoute] },
     { path: '/customMessages', routes: [...necessaryMiddlewares, customMessageRoute] },
+    { path: '/scenarios', routes: [...necessaryMiddlewares, scenarioRoute] },
     { path: '/auth', routes: [authRoute] },
 ]
 

@@ -7,6 +7,7 @@ const IncidentService = require('./incident')
 const TaskService = require('./task')
 const ColorPaletteService = require('./colorpalette')
 const CustomMessageService = require('./customMessage')
+const ScenarioService = require('./scenario')
 
 module.exports = {
     ResourceService,
@@ -18,4 +19,5 @@ module.exports = {
     TaskService,
     ColorPaletteService,
     CustomMessageService,
+    ScenarioService,
 }
