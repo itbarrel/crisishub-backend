@@ -23,6 +23,7 @@ class RoleService extends ResourceService {
                     ColorPalettes: ['*'],
                     CustomMessages: ['*'],
                     Scenarios: ['*'],
+                    TaskLists: ['*'],
 
                 },
                 default: true,

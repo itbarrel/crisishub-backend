@@ -8,6 +8,7 @@ const TaskService = require('./task')
 const ColorPaletteService = require('./colorpalette')
 const CustomMessageService = require('./customMessage')
 const ScenarioService = require('./scenario')
+const TaskListService = require('./taskList')
 
 module.exports = {
     ResourceService,
@@ -20,4 +21,5 @@ module.exports = {
     ColorPaletteService,
     CustomMessageService,
     ScenarioService,
+    TaskListService,
 }
