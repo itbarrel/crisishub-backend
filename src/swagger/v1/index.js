@@ -5,6 +5,10 @@ const role = require('./roles')
 const department = require('./departments')
 const task = require('./task')
 const incidents = require('./incidents')
+const colorpalette = require('./colorPalettes')
+const customMessage = require('./customMessages')
+const scenario = require('./scenarios')
+const TaskList = require('./taskLists')
 
 module.exports = {
     ...auth,
@@ -14,5 +18,9 @@ module.exports = {
     ...department,
     ...task,
     ...incidents,
+    ...colorpalette,
+    ...customMessage,
+    ...TaskList,
+    ...scenario,
 
 }
