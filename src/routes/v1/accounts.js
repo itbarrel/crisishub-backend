@@ -2,7 +2,6 @@ const express = require('express')
 
 const router = express.Router()
 const accountsController = require('../../controllers/v1/accounts')
-
 const chkPermissions = require('../../middlewares/permissions')
 const validate = require('../../middlewares/validate')
 const { accountPermissions } = require('../../permissions')
