@@ -3,10 +3,11 @@ const {
 } = require('sequelize')
 const sequelizePaginate = require('sequelize-paginate')
 const { downcase, removeChars } = require('../utils')
+const DynamicFormProxy = require('../proxies/dynamicFormProxy')
 
 // const nonCopyTables = ['Account']
 
-const modelOrder = ['Role', 'User', 'Department', 'Incident', 'Task']
+const modelOrder = ['Role', 'User', 'Department', 'Task']
 
 module.exports = (sequelize, DataTypes) => {
     class Account extends Model {
@@ -27,6 +28,13 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             unique: true,
             allowNull: false,
+        },
+        dynamicFormAccountId: {
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
+        },
+        dynamicFormAccountApikey: {
+            type: DataTypes.STRING,
         },
         description: DataTypes.TEXT,
         active: {
@@ -66,8 +74,12 @@ module.exports = (sequelize, DataTypes) => {
                 account.tenant_name = removeChars(downcase(account.name))
                 return account
             },
-            afterCreate: async (account) => {
+            beforeCreate: async (account) => {
                 await sequelize.createSchema(account.tenant_name)
+
+                const dynamicForm = await DynamicFormProxy.createAccount({ name: account.tenant_name })
+                account.dynamicFormAccountId = dynamicForm.data.id
+                account.dynamicFormAccountApikey = dynamicForm.data.apikey
 
                 let currentItem
                 for (let i = 0; i < modelOrder.length; i += 1) {

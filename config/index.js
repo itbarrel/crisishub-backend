@@ -16,6 +16,9 @@ const envVarsSchema = Joi.object()
         SMTP_PASSWORD: Joi.string().description('SMTP credential Password'),
         SMTP_APIKEY: Joi.string().description('Mail sending SMTP API key'),
         FRONT_END_DOMAIN: Joi.string().description('Front_End Domain URL'),
+        Dynamic_Form_Token: Joi.string().description('Dynamic Form Token'),
+        Dynamic_Form_URL: Joi.string().description('Dynamic Form URL'),
+
     })
     .unknown()
 
@@ -59,4 +62,7 @@ module.exports = {
         from: env.SMTP_SENDER_EMAIL || 'someone@yopmail.com',
     },
     frontenddomain: env.FRONT_END_DOMAIN || null,
+    DynamicFormToken: env.Dynamic_Form_Token || null,
+    DynamicFormUrl: env.Dynamic_Form_URL || null,
+
 }

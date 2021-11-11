@@ -18,6 +18,13 @@ module.exports = {
                 allowNull: false,
             },
             description: Sequelize.TEXT,
+            dynamicFormAccountId: {
+                type: Sequelize.UUID,
+                defaultValue: Sequelize.UUIDv4,
+            },
+            dynamicFormAccountApikey: {
+                type: Sequelize.STRING,
+            },
             active: {
                 type: Sequelize.BOOLEAN,
                 defaultValue: true,

@@ -8,6 +8,7 @@ const storage = require('../../../utils/cl-storage')
 const login = async (req, res, next) => {
     try {
         const domain = storage.get('domain')
+        const account = storage.get('account')
 
         const User = new UserService(domain)
 
@@ -25,9 +26,12 @@ const login = async (req, res, next) => {
                     }
 
                     const jwtToken = jwt.sign(decodeObj, config.jwt.secret, { expiresIn: '2h' })
-
                     res.send({
-                        message: 'Welcome', token: jwtToken, permissions: role.permissions, user,
+                        message: 'Welcome',
+                        token: jwtToken,
+                        permissions: role.permissions,
+                        user,
+                        dynamicFormToken: account.dynamicFormAccountApikey,
                     })
                 } else {
                     next(new Error('Role not attached'))
