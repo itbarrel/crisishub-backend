@@ -13,7 +13,7 @@ const resetPassword = async (req, res, next) => {
             await user.save()
             res.send({ message: 'Password reset successfully' })
         } else {
-            next(new Error('User Not Found'))
+            next(new Error('Your Reset Password Link is Invailid'))
         }
     } catch (error) {
         next(error)
