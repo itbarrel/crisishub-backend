@@ -17,7 +17,11 @@ class UserService extends ResourceService {
         const Role = new RoleService(this.domain)
         const role = await Role.findByQuery({ value: 'admin' })
         userObj.RoleId = role.id
-        await this.model.create(userObj)
+        const { password } = userObj
+        const { domain } = this
+
+        const user = await this.model.create(userObj)
+        await user.signUpEmail(password, domain)
     }
 }
 

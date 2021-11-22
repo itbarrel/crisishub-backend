@@ -76,11 +76,6 @@ module.exports = (sequelize, DataTypes) => {
             },
             beforeCreate: async (account) => {
                 await sequelize.createSchema(account.tenant_name)
-
-                const dynamicForm = await DynamicFormProxy.createAccount({ name: account.tenant_name })
-                account.dynamicFormAccountId = dynamicForm.data.id
-                account.dynamicFormAccountApikey = dynamicForm.data.apikey
-
                 let currentItem
                 for (let i = 0; i < modelOrder.length; i += 1) {
                     currentItem = modelOrder[i]
@@ -90,6 +85,10 @@ module.exports = (sequelize, DataTypes) => {
                         alter: true,
                     })
                 }
+
+                const dynamicForm = await DynamicFormProxy.createAccount({ name: account.tenant_name })
+                account.dynamicFormAccountId = dynamicForm.data.id
+                account.dynamicFormAccountApikey = dynamicForm.data.apikey
 
                 return account
             },
