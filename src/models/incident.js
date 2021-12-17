@@ -5,7 +5,44 @@ const sequelizePaginate = require('sequelize-paginate')
 
 module.exports = (sequelize, DataTypes) => {
     class Incident extends Model {
-        static associate() { }
+        static associate(models) {
+            Incident.hasMany(models.Message, {
+                foreignKey: {
+                    allowNull: false,
+                },
+                onDelete: 'cascade',
+            })
+            Incident.hasMany(models.Action, {
+                foreignKey: {
+                    allowNull: false,
+                },
+                onDelete: 'cascade',
+            })
+            Incident.hasMany(models.Category, {
+                foreignKey: {
+                    allowNull: false,
+                },
+                onDelete: 'cascade',
+            })
+            Incident.hasMany(models.CategoryMessage, {
+                foreignKey: {
+                    allowNull: false,
+                },
+                onDelete: 'cascade',
+            })
+            Incident.hasMany(models.IncomingMessage, {
+                foreignKey: {
+                    allowNull: false,
+                },
+                onDelete: 'cascade',
+            })
+            Incident.hasMany(models.ActionMessage, {
+                foreignKey: {
+                    allowNull: false,
+                },
+                onDelete: 'cascade',
+            })
+        }
     }
     Incident.init({
         id: {

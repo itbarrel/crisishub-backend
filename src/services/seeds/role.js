@@ -14,6 +14,11 @@ const superAdminRole = {
         CustomMessages: ['*'],
         Scenarios: ['*'],
         TaskLists: ['*'],
+        Categories: ['*'],
+        ActionLists: ['*'],
+        CategoryMessages: ['*'],
+        ActionMessages: ['*'],
+        IncomingMessages: ['*'],
     },
     default: true,
 }
