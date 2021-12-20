@@ -4,7 +4,7 @@ module.exports = {
             actionsTocheck: [
                 'view',
             ],
-            entity: 'ActionMessages',
+            entity: 'ActionListMessages',
         },
     ],
     create: [
@@ -12,7 +12,7 @@ module.exports = {
             actionsTocheck: [
                 'create',
             ],
-            entity: 'ActionMessages',
+            entity: 'ActionListMessages',
         },
     ],
     get: [
@@ -20,7 +20,7 @@ module.exports = {
             actionsTocheck: [
                 'view',
             ],
-            entity: 'ActionMessages',
+            entity: 'ActionListMessages',
         },
     ],
     update: [
@@ -28,7 +28,7 @@ module.exports = {
             actionsTocheck: [
                 'update',
             ],
-            entity: 'ActionMessages',
+            entity: 'ActionListMessages',
         },
     ],
     delete: [
@@ -36,7 +36,7 @@ module.exports = {
             actionsTocheck: [
                 'delete',
             ],
-            entity: 'ActionMessages',
+            entity: 'ActionListMessages',
         },
     ],
 }

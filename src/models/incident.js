@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
                 },
                 onDelete: 'cascade',
             })
-            Incident.hasMany(models.Action, {
+            Incident.hasMany(models.ActionList, {
                 foreignKey: {
                     allowNull: false,
                 },
@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
                 },
                 onDelete: 'cascade',
             })
-            Incident.hasMany(models.ActionMessage, {
+            Incident.hasMany(models.ActionListMessage, {
                 foreignKey: {
                     allowNull: false,
                 },

@@ -4,7 +4,7 @@ module.exports = {
             actionsTocheck: [
                 'view',
             ],
-            entity: 'TaskLists',
+            entity: 'Messages',
         },
     ],
     create: [
@@ -12,7 +12,7 @@ module.exports = {
             actionsTocheck: [
                 'create',
             ],
-            entity: 'TaskLists',
+            entity: 'Messages',
         },
     ],
     get: [
@@ -20,7 +20,7 @@ module.exports = {
             actionsTocheck: [
                 'view',
             ],
-            entity: 'TaskLists',
+            entity: 'Messages',
         },
     ],
     update: [
@@ -28,7 +28,7 @@ module.exports = {
             actionsTocheck: [
                 'update',
             ],
-            entity: 'TaskLists',
+            entity: 'Messages',
         },
     ],
     delete: [
@@ -36,8 +36,7 @@ module.exports = {
             actionsTocheck: [
                 'delete',
             ],
-            entity: 'TaskLists',
+            entity: 'Messages',
         },
     ],
-
 }

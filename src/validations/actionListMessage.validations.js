@@ -1,6 +1,6 @@
 const Joi = require('joi')
 
-const actionMessageObj = {
+const actionListMessageObj = {
     body: Joi.object().keys({
         id: Joi.string(),
         parentId: Joi.string(),
@@ -13,5 +13,5 @@ const actionMessageObj = {
 }
 
 module.exports = {
-    actionMessageObj,
+    actionListMessageObj,
 }

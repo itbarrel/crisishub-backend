@@ -5,7 +5,6 @@ const all = async (req, res, next) => {
         const { offset, limit, ...query } = req.query
 
         const ActionList = new ActionListsService()
-        console.log('action')
         const { docs, pages, total } = await ActionList.all(query, offset, limit)
 
         res.send({ data: docs, pages, total })

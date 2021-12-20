@@ -4,18 +4,18 @@ const {
 const sequelizePaginate = require('sequelize-paginate')
 
 module.exports = (sequelize, DataTypes) => {
-    class Action extends Model {
+    class ActionList extends Model {
         static associate(models) {
-            Action.hasMany(models.ActionMessage, {
+            ActionList.hasMany(models.ActionListMessage, {
                 foreignKey: 'parentId',
                 constraints: false,
                 onDelete: 'cascade',
                 scope: {
-                    parentType: 'actionMessage',
+                    parentType: 'actionListMessage',
                 },
 
             })
-            Action.belongsTo(models.Incident, {
+            ActionList.belongsTo(models.Incident, {
                 foreignKey: {
                     allowNull: false,
                 },
@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
             })
         }
     }
-    Action.init({
+    ActionList.init({
         id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
@@ -56,11 +56,11 @@ module.exports = (sequelize, DataTypes) => {
         },
     }, {
         sequelize,
-        modelName: 'Action',
-        tableName: 'actions',
+        modelName: 'ActionList',
+        tableName: 'actionLists',
         paranoid: true,
     })
-    sequelizePaginate.paginate(Action)
+    sequelizePaginate.paginate(ActionList)
 
-    return Action
+    return ActionList
 }

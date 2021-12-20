@@ -8,7 +8,7 @@ class ActionListsService extends ResourceService {
         const decoded = storage.get('decoded')
         const domain = tenantName || decoded.domain
         const schemaModels = models(domain)
-        super(schemaModels.Action)
+        super(schemaModels.ActionList)
         this.domain = domain
     }
 }

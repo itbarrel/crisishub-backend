@@ -1,15 +1,17 @@
 const Joi = require('joi')
 
-const categoryObj = {
+const messageObj = {
     body: Joi.object().keys({
         id: Joi.string(),
-        title: Joi.string(),
-        summary: Joi.string(),
+        parentId: Joi.string(),
+        parentType: Joi.string(),
         IncidentId: Joi.string(),
+        title: Joi.string(),
+        message: Joi.string(),
         active: Joi.boolean(),
     }),
 }
 
 module.exports = {
-    categoryObj,
+    messageObj,
 }

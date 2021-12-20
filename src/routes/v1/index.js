@@ -17,11 +17,12 @@ const taskRoute = require('./tasks')
 const colorPaletteRoute = require('./colorpalette')
 const customMessageRoute = require('./customMessages')
 const scenarioRoute = require('./scenarios')
-const taskListRoute = require('./tasklists')
 const categoryRoute = require('./categories')
 const actionRoute = require('./actionList')
 const categoryMessageRoute = require('./categoryMessages')
-const actionMessageRoute = require('./actionMessages')
+const actionListMessageRoute = require('./actionListMessages')
+const incomingMessageRoute = require('./incomingMessage')
+const messageRoute = require('./message')
 
 const verifyAccount = require('../../middlewares/verifyAccount')
 const setDomainFromBody = require('../../middlewares/setDomainFromBody')
@@ -43,11 +44,12 @@ const routes = [
     { path: '/colorpalettes', routes: [...necessaryMiddlewares, colorPaletteRoute] },
     { path: '/customMessages', routes: [...necessaryMiddlewares, customMessageRoute] },
     { path: '/scenarios', routes: [...necessaryMiddlewares, scenarioRoute] },
-    { path: '/taskLists', routes: [...necessaryMiddlewares, taskListRoute] },
     { path: '/categories', routes: [...necessaryMiddlewares, categoryRoute] },
     { path: '/actionLists', routes: [...necessaryMiddlewares, actionRoute] },
     { path: '/categoryMessages', routes: [...necessaryMiddlewares, categoryMessageRoute] },
-    { path: '/actionmessages', routes: [...necessaryMiddlewares, actionMessageRoute] },
+    { path: '/actionListMessages', routes: [...necessaryMiddlewares, actionListMessageRoute] },
+    { path: '/incomingMessages', routes: [...necessaryMiddlewares, incomingMessageRoute] },
+    { path: '/messages', routes: [...necessaryMiddlewares, messageRoute] },
     { path: '/auth', routes: [authRoute] },
 ]
 

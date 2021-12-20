@@ -24,6 +24,9 @@ module.exports = {
                 type: {
                     type: Sequelize.STRING,
                 },
+                forTemplate: {
+                    type: Sequelize.BOOLEAN,
+                },
                 active: {
                     type: Sequelize.BOOLEAN,
                     defaultValue: true,

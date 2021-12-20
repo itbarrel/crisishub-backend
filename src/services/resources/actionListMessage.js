@@ -3,26 +3,26 @@ const storage = require('../../utils/cl-storage')
 
 const ResourceService = require('./resource')
 
-class CategoryMessageService extends ResourceService {
+class ActionListMessageService extends ResourceService {
     constructor(tenantName) {
         const decoded = storage.get('decoded')
         const domain = tenantName || decoded.domain
         const schemaModels = models(domain)
-        super(schemaModels.CategoryMessage)
+        super(schemaModels.ActionListMessage)
         this.domain = domain
     }
 
     async all(query = {}, offset = 1, limit = 50) {
-        query.parentType = 'categoryMessage'
+        query.parentType = 'actionListMessage'
         const options = {
             // offset: offset * (limit + 1),
             where: query,
             page: offset,
             paginate: limit,
-            include: ['Category'],
+            include: ['ActionList'],
         }
         return this.model.paginate(options)
     }
 }
 
-module.exports = CategoryMessageService
+module.exports = ActionListMessageService

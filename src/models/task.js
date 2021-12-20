@@ -28,6 +28,9 @@ module.exports = (sequelize, DataTypes) => {
         type: {
             type: DataTypes.STRING,
         },
+        forTemplate: {
+            type: DataTypes.BOOLEAN,
+        },
         active: {
             type: DataTypes.BOOLEAN,
             defaultValue: true,

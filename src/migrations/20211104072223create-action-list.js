@@ -1,7 +1,7 @@
 module.exports = {
     up: async (queryInterface, Sequelize) => {
         const upChange = async (schema) => {
-            const table = { schema, tableName: 'actions ' }
+            const table = { schema, tableName: 'actionLists' }
             await queryInterface.createTable(table, {
                 id: {
                     allowNull: false,
@@ -46,6 +46,7 @@ module.exports = {
                 },
             })
         }
+
         await upChange('public')
         const schemas = await queryInterface.sequelize.showAllSchemas({
             options: {},
@@ -54,9 +55,10 @@ module.exports = {
             await upChange(schema)
         })
     },
+
     down: async (queryInterface) => {
         const downChange = async (schema) => {
-            const table = { schema, tableName: 'actions' }
+            const table = { schema, tableName: 'actionLists' }
             await queryInterface.dropTable(table)
         }
 

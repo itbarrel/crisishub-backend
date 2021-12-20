@@ -4,35 +4,37 @@ const {
 const sequelizePaginate = require('sequelize-paginate')
 
 module.exports = (sequelize, DataTypes) => {
-    class TaskList extends Model {
-        static associate() {
-            // define association here
+    class ActionListMessage extends Model {
+        static associate(models) {
+            ActionListMessage.belongsTo(models.ActionList, {
+                foreignKey: 'parentId',
+            })
+            ActionListMessage.belongsTo(models.Incident, {
+                foreignKey: {
+                    allowNull: false,
+                },
+                onDelete: 'cascade',
+            })
         }
     }
-    TaskList.init({
+    ActionListMessage.init({
         id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
             primaryKey: true,
         },
+        parentId: {
+            type: DataTypes.UUID,
+        },
+        parentType: {
+            type: DataTypes.STRING,
+            defaultValue: 'actionListMessage',
+        },
         title: {
             type: DataTypes.STRING,
         },
-        author: {
+        message: {
             type: DataTypes.STRING,
-        },
-        links: {
-            type: DataTypes.STRING,
-        },
-        type: {
-            type: DataTypes.STRING,
-        },
-        description: {
-            type: DataTypes.TEXT,
-        },
-        forTemplate: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: true,
         },
         active: {
             type: DataTypes.BOOLEAN,
@@ -52,10 +54,10 @@ module.exports = (sequelize, DataTypes) => {
         },
     }, {
         sequelize,
-        modelName: 'TaskList',
-        tableName: 'taskLists',
+        modelName: 'ActionListMessage',
+        tableName: 'messages',
         paranoid: true,
     })
-    sequelizePaginate.paginate(TaskList)
-    return TaskList
+    sequelizePaginate.paginate(ActionListMessage)
+    return ActionListMessage
 }
