@@ -63,7 +63,7 @@ module.exports = {
                         active: {
                             type: 'boolean',
                         },
-                        RoleId: {
+                        roleId: {
                             type: 'string',
                             format: 'uuid',
                         },
@@ -75,7 +75,7 @@ module.exports = {
                         'password',
                         'firstName',
                         'lastName',
-                        'RoleId',
+                        'roleId',
                     ],
                     type: 'object',
                 },

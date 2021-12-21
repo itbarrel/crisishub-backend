@@ -9,9 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     class User extends Model {
         static associate(models) {
             User.belongsTo(models.Role, {
-                foreignKey: {
-                    allowNull: false,
-                },
+                foreignKey: 'roleId',
                 onDelete: 'cascade',
             })
             User.belongsToMany(models.ColorPalette, { through: 'UserColorPalette' })

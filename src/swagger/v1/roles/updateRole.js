@@ -46,7 +46,7 @@ module.exports = {
     responses: {
         200: {
             description:
-                '{id:" ",userName:" ",email:" ",password:" ",RoleId:" ",createAt:" ",updatedAt:" ",deletedAt:" "}',
+                '{id:" ",userName:" ",email:" ",password:" ",roleId:" ",createAt:" ",updatedAt:" ",deletedAt:" "}',
         },
         401: {
             description: 'Token Expire',

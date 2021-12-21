@@ -5,7 +5,7 @@ const actionListsObj = {
         id: Joi.string(),
         title: Joi.string(),
         description: Joi.string(),
-        IncidentId: Joi.string(),
+        incidentId: Joi.string(),
         type: Joi.string(),
         active: Joi.boolean(),
     }),

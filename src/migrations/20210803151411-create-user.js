@@ -64,7 +64,7 @@ module.exports = {
                     type: Sequelize.BOOLEAN,
                     defaultValue: true,
                 },
-                RoleId: {
+                roleId: {
                     type: Sequelize.UUID,
                     allowNull: false,
                     references: {
