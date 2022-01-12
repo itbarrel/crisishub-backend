@@ -11,7 +11,7 @@ const create = async () => {
         password: 'crisishub12345',
         firstName: 'Super',
         lastName: 'Admin',
-        roleId: role.id,
+        RoleId: role.id,
     }
 
     await User.create(superAdmin)

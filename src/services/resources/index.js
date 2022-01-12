@@ -6,7 +6,6 @@ const DepartmentService = require('./department')
 const IncidentService = require('./incident')
 const TaskService = require('./task')
 const ColorPaletteService = require('./colorpalette')
-const CustomMessageService = require('./customMessage')
 const ScenarioService = require('./scenario')
 const CategoryMessageService = require('./categoryMessage')
 const ActionListMessageService = require('./actionListMessage')
@@ -24,7 +23,6 @@ module.exports = {
     IncidentService,
     TaskService,
     ColorPaletteService,
-    CustomMessageService,
     ScenarioService,
     CategoryMessageService,
     ActionListMessageService,

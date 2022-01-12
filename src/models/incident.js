@@ -7,27 +7,39 @@ module.exports = (sequelize, DataTypes) => {
     class Incident extends Model {
         static associate(models) {
             Incident.hasMany(models.Message, {
-                foreignKey: 'incidentId',
+                foreignKey: {
+                    allowNull: false,
+                },
                 onDelete: 'cascade',
             })
             Incident.hasMany(models.ActionList, {
-                foreignKey: 'incidentId',
+                foreignKey: {
+                    allowNull: false,
+                },
                 onDelete: 'cascade',
             })
             Incident.hasMany(models.Category, {
-                foreignKey: 'incidentId',
+                foreignKey: {
+                    allowNull: false,
+                },
                 onDelete: 'cascade',
             })
             Incident.hasMany(models.CategoryMessage, {
-                foreignKey: 'incidentId',
+                foreignKey: {
+                    allowNull: false,
+                },
                 onDelete: 'cascade',
             })
             Incident.hasMany(models.IncomingMessage, {
-                foreignKey: 'incidentId',
+                foreignKey: {
+                    allowNull: false,
+                },
                 onDelete: 'cascade',
             })
             Incident.hasMany(models.ActionListMessage, {
-                foreignKey: 'incidentId',
+                foreignKey: {
+                    allowNull: false,
+                },
                 onDelete: 'cascade',
             })
         }

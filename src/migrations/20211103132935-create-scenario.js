@@ -1,37 +1,60 @@
 module.exports = {
     up: async (queryInterface, Sequelize) => {
-        await queryInterface.createTable('scenarios', {
-            id: {
-                allowNull: false,
-                primaryKey: true,
-                type: Sequelize.UUID,
-                defaultValue: Sequelize.UUIDv4,
-            },
-            name: {
-                type: Sequelize.STRING,
-            },
-            description: {
-                type: Sequelize.TEXT,
-            },
-            active: {
-                type: Sequelize.BOOLEAN,
-                defaultValue: true,
-            },
-            deletedAt: {
-                allowNull: true,
-                type: Sequelize.DATE,
-            },
-            createdAt: {
-                allowNull: false,
-                type: Sequelize.DATE,
-            },
-            updatedAt: {
-                allowNull: false,
-                type: Sequelize.DATE,
-            },
+        const upChange = async (schema) => {
+            const table = { schema, tableName: 'scenarios' }
+            await queryInterface.createTable(table, {
+                id: {
+                    allowNull: false,
+                    primaryKey: true,
+                    type: Sequelize.UUID,
+                    defaultValue: Sequelize.UUIDv4,
+                },
+                name: {
+                    type: Sequelize.STRING,
+                },
+                description: {
+                    type: Sequelize.TEXT,
+                },
+                active: {
+                    type: Sequelize.BOOLEAN,
+                    defaultValue: false,
+                },
+                createdAt: {
+                    allowNull: false,
+                    type: Sequelize.DATE,
+                },
+                updatedAt: {
+                    allowNull: true,
+                    type: Sequelize.DATE,
+                },
+                deletedAt: {
+                    allowNull: true,
+                    type: Sequelize.DATE,
+                },
+            })
+        }
+
+        await upChange('public')
+        const schemas = await queryInterface.sequelize.showAllSchemas({
+            options: {},
+        })
+        return schemas.forEach(async (schema) => {
+            await upChange(schema)
         })
     },
+
     down: async (queryInterface) => {
-        await queryInterface.dropTable('scenarios')
+        const downChange = async (schema) => {
+            const table = { schema, tableName: 'scenarios' }
+            await queryInterface.dropTable(table)
+        }
+
+        await downChange('public')
+        const schemas = await queryInterface.sequelize.showAllSchemas({
+            options: {},
+        })
+        return schemas.forEach(async (schema) => {
+            await downChange(schema)
+        })
     },
 }

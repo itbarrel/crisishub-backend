@@ -21,11 +21,21 @@ module.exports = {
                 message: {
                     type: Sequelize.STRING,
                 },
-                incidentId: {
+                IncidentId: {
                     type: Sequelize.UUID,
                     allowNull: false,
                     references: {
                         model: 'incidents',
+                        key: 'id',
+                    },
+                    onDelete: 'SET NULL',
+                    onUpdate: 'CASCADE',
+                },
+                ColorPaletteId: {
+                    type: Sequelize.UUID,
+                    allowNull: false,
+                    references: {
+                        model: 'colorPalettes',
                         key: 'id',
                     },
                     onDelete: 'SET NULL',

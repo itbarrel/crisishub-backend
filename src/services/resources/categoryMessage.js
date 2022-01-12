@@ -13,9 +13,7 @@ class CategoryMessageService extends ResourceService {
     }
 
     async all(query = {}, offset = 1, limit = 50) {
-        query.parentType = 'categoryMessage'
         const options = {
-            // offset: offset * (limit + 1),
             where: query,
             page: offset,
             paginate: limit,

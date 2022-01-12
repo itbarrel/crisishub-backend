@@ -5,7 +5,7 @@ const categoryObj = {
         id: Joi.string(),
         title: Joi.string(),
         summary: Joi.string(),
-        incidentId: Joi.string(),
+        IncidentId: Joi.string(),
         active: Joi.boolean(),
     }),
 }

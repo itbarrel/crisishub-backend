@@ -11,7 +11,6 @@ const superAdminRole = {
         Incidents: ['*'],
         Tasks: ['*'],
         ColorPalettes: ['*'],
-        CustomMessages: ['*'],
         Scenarios: ['*'],
         Categories: ['*'],
         ActionLists: ['*'],

@@ -6,9 +6,20 @@ const sequelizePaginate = require('sequelize-paginate')
 module.exports = (sequelize, DataTypes) => {
     class Message extends Model {
         static associate(models) {
-            Message.belongsTo(models.Incident, {
-                foreignKey: 'incidentId',
-            })
+            Message.belongsTo(models.Incident,
+                {
+                    foreignKey: {
+                        allowNull: false,
+                    },
+                    onDelete: 'cascade',
+                })
+            Message.belongsTo(models.ColorPalette,
+                {
+                    foreignKey: {
+                        allowNull: false,
+                    },
+                    onDelete: 'cascade',
+                })
         }
     }
     Message.init({
@@ -50,6 +61,11 @@ module.exports = (sequelize, DataTypes) => {
         sequelize,
         modelName: 'Message',
         tableName: 'messages',
+        defaultScope: {
+            where: {
+                parentType: 'message',
+            },
+        },
         paranoid: true,
     })
     sequelizePaginate.paginate(Message)

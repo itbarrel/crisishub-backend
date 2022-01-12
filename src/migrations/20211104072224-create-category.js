@@ -15,7 +15,7 @@ module.exports = {
                 summary: {
                     type: Sequelize.STRING,
                 },
-                incidentId: {
+                IncidentId: {
                     type: Sequelize.UUID,
                     allowNull: false,
                     references: {

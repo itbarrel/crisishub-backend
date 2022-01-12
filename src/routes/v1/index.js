@@ -15,7 +15,6 @@ const departmentRoute = require('./departments')
 const incidentRoute = require('./incidents')
 const taskRoute = require('./tasks')
 const colorPaletteRoute = require('./colorpalette')
-const customMessageRoute = require('./customMessages')
 const scenarioRoute = require('./scenarios')
 const categoryRoute = require('./categories')
 const actionRoute = require('./actionList')
@@ -42,7 +41,6 @@ const routes = [
     { path: '/incidents', routes: [...necessaryMiddlewares, incidentRoute] },
     { path: '/tasks', routes: [...necessaryMiddlewares, taskRoute] },
     { path: '/colorpalettes', routes: [...necessaryMiddlewares, colorPaletteRoute] },
-    { path: '/customMessages', routes: [...necessaryMiddlewares, customMessageRoute] },
     { path: '/scenarios', routes: [...necessaryMiddlewares, scenarioRoute] },
     { path: '/categories', routes: [...necessaryMiddlewares, categoryRoute] },
     { path: '/actionLists', routes: [...necessaryMiddlewares, actionRoute] },

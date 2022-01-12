@@ -16,7 +16,7 @@ class UserService extends ResourceService {
     async createDefaultUsersFor(userObj) {
         const Role = new RoleService(this.domain)
         const role = await Role.findByQuery({ value: 'admin' })
-        userObj.roleId = role.id
+        userObj.RoleId = role.id
         const { password } = userObj
         const { domain } = this
 
