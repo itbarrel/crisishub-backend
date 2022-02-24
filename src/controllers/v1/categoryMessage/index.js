@@ -1,4 +1,9 @@
-const { CategoryMessageService } = require('../../../services/resources')
+const Sequelize = require('sequelize')
+
+const {
+    CategoryMessageService,
+    CategoryService,
+} = require('../../../services/resources')
 
 const all = async (req, res, next) => {
     try {
@@ -6,8 +11,11 @@ const all = async (req, res, next) => {
 
         const CategoryMessage = new CategoryMessageService()
 
-        const { docs, pages, total } = await CategoryMessage.all(query, offset, limit)
-
+        const { docs, pages, total } = await CategoryMessage.all(
+            query,
+            offset,
+            limit,
+        )
         res.send({ data: docs, pages, total })
     } catch (error) {
         next(error)
@@ -19,7 +27,9 @@ const create = async (req, res, next) => {
         const CategoryMessage = new CategoryMessageService()
 
         const categoryMessageObj = req.body
-        const categoryMessage = await CategoryMessage.create(categoryMessageObj)
+        const categoryMessage = await CategoryMessage.create(
+            categoryMessageObj,
+        )
 
         res.send(categoryMessage)
     } catch (error) {
@@ -52,6 +62,51 @@ const update = async (req, res, next) => {
         next(error)
     }
 }
+const sortOrder = async (req, res, next) => {
+    try {
+        const op = Sequelize.Op
+        const CategoryMessage = new CategoryMessageService()
+        const Category = new CategoryService()
+
+        const { id } = req.params
+        const { categoryId, sortOrder: order } = req.body
+
+        const categoryMessage = await CategoryMessage.findById(id)
+        if (!categoryMessage) {
+            throw new Error(' CategoryMessage Not found.')
+        }
+
+        const category = await Category.findById(categoryId)
+
+        if (!category) {
+            throw new Error(' Category Not found.')
+        }
+
+        const categoryMessages = await category.getCategoryMessages({
+            where: {
+                id: {
+                    [op.ne]: id,
+                },
+                sortOrder: {
+                    [op.gt]: order,
+                },
+            },
+        })
+        await Promise.all(
+            categoryMessages.map((message, index) => message.update({
+                sortOrder: order + 2 + index,
+            })),
+        )
+        await categoryMessage.update({
+            parentId: categoryId,
+            sortOrder: order + 1,
+        })
+
+        res.send({ message: 'Message Location Updated' })
+    } catch (error) {
+        next(error)
+    }
+}
 
 const destroy = async (req, res, next) => {
     try {
@@ -67,5 +122,10 @@ const destroy = async (req, res, next) => {
 }
 
 module.exports = {
-    all, create, show, update, destroy,
+    all,
+    create,
+    show,
+    update,
+    destroy,
+    sortOrder,
 }

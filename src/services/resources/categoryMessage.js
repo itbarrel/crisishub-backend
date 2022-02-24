@@ -17,7 +17,7 @@ class CategoryMessageService extends ResourceService {
             where: query,
             page: offset,
             paginate: limit,
-            include: ['Category'],
+            // include: ['Category'],
         }
         return this.model.paginate(options)
     }

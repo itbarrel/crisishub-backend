@@ -6,6 +6,7 @@ const categoryMessageObj = {
         parentId: Joi.string(),
         parentType: Joi.string(),
         title: Joi.string(),
+        sortOrder: Joi.number(),
         IncidentId: Joi.string(),
         ColorPaletteId: Joi.string(),
         message: Joi.string(),

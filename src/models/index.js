@@ -23,13 +23,21 @@ const nonTenantModels = ['Account']
 module.exports = (tenant = 'public') => {
     const db = {}
 
-    fs
-        .readdirSync(__dirname)
-        .filter((file) => (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js'))
+    fs.readdirSync(__dirname)
+        .filter(
+            (file) => file.indexOf('.') !== 0
+                && file !== basename
+                && file.slice(-3) === '.js',
+        )
         .forEach((file) => {
-            const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes)
+            const model = require(path.join(__dirname, file))(
+                sequelize,
+                Sequelize.DataTypes,
+            )
             if (model.name === 'Acount') return
-            db[model.name] = (nonTenantModels.includes(model.name)) ? model : model.schema(tenant)
+            db[model.name] = nonTenantModels.includes(model.name)
+                ? model
+                : model.schema(tenant)
         })
 
     Object.keys(db).forEach((modelName) => {

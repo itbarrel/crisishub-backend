@@ -9,7 +9,6 @@ class ResourceService {
             where: query,
             page: offset,
             paginate: limit,
-
         }
         return this.model.paginate(options)
     }
@@ -19,7 +18,7 @@ class ResourceService {
     }
 
     async findById(id) {
-        return this.model.byId(id)
+        return this.model.findByPk(id)
     }
 
     async findByQuery(
@@ -36,7 +35,11 @@ class ResourceService {
         }
 
         const fullQuery = {
-            where: query, attributes, include, offset, limit,
+            where: query,
+            attributes,
+            include,
+            offset,
+            limit,
         }
 
         return single

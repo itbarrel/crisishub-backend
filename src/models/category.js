@@ -1,6 +1,4 @@
-const {
-    Model,
-} = require('sequelize')
+const { Model } = require('sequelize')
 const sequelizePaginate = require('sequelize-paginate')
 
 module.exports = (sequelize, DataTypes) => {
@@ -22,40 +20,51 @@ module.exports = (sequelize, DataTypes) => {
             })
         }
     }
-    Category.init({
-        id: {
-            type: DataTypes.UUID,
-            defaultValue: DataTypes.UUIDV4,
-            primaryKey: true,
+    Category.init(
+        {
+            id: {
+                type: DataTypes.UUID,
+                defaultValue: DataTypes.UUIDV4,
+                primaryKey: true,
+            },
+            title: {
+                type: DataTypes.STRING,
+            },
+            summary: {
+                type: DataTypes.STRING,
+            },
+            sortOrder: {
+                type: DataTypes.INTEGER,
+                autoIncrement: true,
+                allowNull: false,
+            },
+            active: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: true,
+            },
+            createdAt: {
+                allowNull: false,
+                type: DataTypes.DATE,
+            },
+            updatedAt: {
+                allowNull: true,
+                type: DataTypes.DATE,
+            },
+            deletedAt: {
+                allowNull: true,
+                type: DataTypes.DATE,
+            },
         },
-        title: {
-            type: DataTypes.STRING,
+        {
+            sequelize,
+            modelName: 'Category',
+            tableName: 'categories',
+            defaultScope: {
+                order: [['sortOrder', 'ASC']],
+            },
+            paranoid: true,
         },
-        summary: {
-            type: DataTypes.STRING,
-        },
-        active: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: true,
-        },
-        createdAt: {
-            allowNull: false,
-            type: DataTypes.DATE,
-        },
-        updatedAt: {
-            allowNull: true,
-            type: DataTypes.DATE,
-        },
-        deletedAt: {
-            allowNull: true,
-            type: DataTypes.DATE,
-        },
-    }, {
-        sequelize,
-        modelName: 'Category',
-        tableName: 'categories',
-        paranoid: true,
-    })
+    )
     sequelizePaginate.paginate(Category)
     return Category
 }

@@ -67,5 +67,9 @@ const destroy = async (req, res, next) => {
 }
 
 module.exports = {
-    all, create, show, update, destroy,
+    all,
+    create,
+    show,
+    update,
+    destroy,
 }
