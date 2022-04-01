@@ -21,6 +21,16 @@ module.exports = {
                 message: {
                     type: Sequelize.STRING,
                 },
+                UserId: {
+                    type: Sequelize.UUID,
+                    allowNull: false,
+                    references: {
+                        model: 'users',
+                        key: 'id',
+                    },
+                    onDelete: 'SET NULL',
+                    onUpdate: 'CASCADE',
+                },
                 IncidentId: {
                     type: Sequelize.UUID,
                     allowNull: false,

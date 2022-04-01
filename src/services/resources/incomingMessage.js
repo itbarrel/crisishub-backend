@@ -13,10 +13,18 @@ class IncomingMessageService extends ResourceService {
     }
 
     async all(query = {}, offset = 1, limit = 50) {
+        const domainModels = models(this.domain)
+
         const options = {
             where: query,
             page: offset,
             paginate: limit,
+            include: [
+                {
+                    model: domainModels.User,
+                    required: false,
+                },
+            ],
         }
         return this.model.paginate(options)
     }

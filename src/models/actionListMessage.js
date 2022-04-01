@@ -19,6 +19,12 @@ module.exports = (sequelize, DataTypes) => {
                 },
                 onDelete: 'cascade',
             })
+            ActionListMessage.belongsTo(models.User, {
+                foreignKey: {
+                    allowNull: false,
+                },
+                onDelete: 'cascade',
+            })
         }
     }
     ActionListMessage.init(

@@ -19,6 +19,12 @@ module.exports = (sequelize, DataTypes) => {
                 },
                 onDelete: 'cascade',
             })
+            CategoryMessage.belongsTo(models.User, {
+                foreignKey: {
+                    allowNull: false,
+                },
+                onDelete: 'cascade',
+            })
         }
     }
     CategoryMessage.init(
@@ -71,7 +77,7 @@ module.exports = (sequelize, DataTypes) => {
                 where: {
                     parentType: 'categoryMessage',
                 },
-                // order: [["index", "ASC"]],
+                order: [['sortOrder', 'ASC']],
             },
             paranoid: true,
         },

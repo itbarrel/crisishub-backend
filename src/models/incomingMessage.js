@@ -16,6 +16,12 @@ module.exports = (sequelize, DataTypes) => {
                 },
                 onDelete: 'cascade',
             })
+            IncomingMessage.belongsTo(models.User, {
+                foreignKey: {
+                    allowNull: false,
+                },
+                onDelete: 'cascade',
+            })
         }
     }
     IncomingMessage.init(
@@ -68,6 +74,7 @@ module.exports = (sequelize, DataTypes) => {
                 where: {
                     parentType: 'incomingMessage',
                 },
+                order: [['sortOrder', 'ASC']],
             },
             paranoid: true,
         },

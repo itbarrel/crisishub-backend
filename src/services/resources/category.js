@@ -19,7 +19,13 @@ class CategoryService extends ResourceService {
             page: offset,
             paginate: limit,
             order: [[domainModels.CategoryMessage, 'sortOrder', 'ASC']],
-            include: [{ model: domainModels.CategoryMessage, required: false }],
+            include: [
+                {
+                    model: domainModels.CategoryMessage,
+                    required: false,
+                    include: { model: domainModels.User, required: false },
+                },
+            ],
         }
         return this.model.paginate(options)
     }
