@@ -1,6 +1,11 @@
 module.exports = {
     up: async (queryInterface, Sequelize) => {
-        await queryInterface.createTable('scenarios', {
+        const { sequelize } = queryInterface
+        const { options } = sequelize
+        const schema = options.schema || 'public'
+
+        const table = { schema, tableName: 'scenarios' }
+        await queryInterface.createTable(table, {
             id: {
                 allowNull: false,
                 primaryKey: true,
@@ -32,6 +37,12 @@ module.exports = {
         })
     },
     down: async (queryInterface) => {
-        await queryInterface.dropTable('scenarios')
+        const { sequelize } = queryInterface
+        const { options } = sequelize
+        const schema = options.schema || 'public'
+
+        const table = { schema, tableName: 'scenarios' }
+
+        await queryInterface.dropTable(table)
     },
 }

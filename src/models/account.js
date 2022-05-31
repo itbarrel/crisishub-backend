@@ -2,12 +2,12 @@ const {
     Model,
 } = require('sequelize')
 const sequelizePaginate = require('sequelize-paginate')
-const { downcase, removeChars } = require('../utils')
+const { downcase, removeChars, umzug } = require('../utils')
 const DynamicFormProxy = require('../proxies/dynamicFormProxy')
 
 // const nonCopyTables = ['Account']
 
-const modelOrder = ['Role', 'User', 'Department', 'Task']
+// const modelOrder = ['Role', 'User', 'Department', 'Task']
 
 module.exports = (sequelize, DataTypes) => {
     class Account extends Model {
@@ -76,20 +76,24 @@ module.exports = (sequelize, DataTypes) => {
             },
             beforeCreate: async (account) => {
                 await sequelize.createSchema(account.tenant_name)
+                const umzugSchema = umzug(account.tenant_name)
+                await umzugSchema.migrate()
 
+                // Proxy API
                 const dynamicForm = await DynamicFormProxy.createAccount({ name: account.tenant_name })
                 account.dynamicFormAccountId = dynamicForm.data.id
                 account.dynamicFormAccountApikey = dynamicForm.data.apikey
+                // END of Proxy API
 
-                let currentItem
-                for (let i = 0; i < modelOrder.length; i += 1) {
-                    currentItem = modelOrder[i]
-                    // eslint-disable-next-line no-await-in-loop
-                    await sequelize.models[currentItem].schema(account.tenant_name).sync({
-                        force: true,
-                        alter: true,
-                    })
-                }
+                // let currentItem
+                // for (let i = 0; i < modelOrder.length; i += 1) {
+                //     currentItem = modelOrder[i]
+                //     // eslint-disable-next-line no-await-in-loop
+                //     await sequelize.models[currentItem].schema(account.tenant_name).sync({
+                //         force: true,
+                //         alter: true,
+                //     })
+                // }
 
                 return account
             },

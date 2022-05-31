@@ -1,6 +1,11 @@
 module.exports = {
     up: async (queryInterface, Sequelize) => {
-        await queryInterface.createTable('taskLists', {
+        const { sequelize } = queryInterface
+        const { options } = sequelize
+        const schema = options.schema || 'public'
+
+        const table = { schema, tableName: 'taskLists' }
+        await queryInterface.createTable(table, {
             id: {
                 allowNull: false,
                 primaryKey: true,
@@ -44,6 +49,12 @@ module.exports = {
         })
     },
     down: async (queryInterface) => {
-        await queryInterface.dropTable('taskLists')
+        const { sequelize } = queryInterface
+        const { options } = sequelize
+        const schema = options.schema || 'public'
+
+        const table = { schema, tableName: 'taskLists' }
+
+        await queryInterface.dropTable(table)
     },
 }
